@@ -1,0 +1,30 @@
+@startuml TOP_ARCHITECTURE
+!define RECTANGLE class
+
+package "Data Acquisition" {
+    [Source Handler]
+    [Local Cache]
+}
+
+package "Core Processing" {
+    [Chem Processor]
+    [Comparison Engine]
+}
+
+package "Visualization" {
+    [Renderer]
+}
+
+package "Output" {
+    [Assembler]
+    [Markdown Report]
+}
+
+[Source Handler] --> [Local Cache]
+[Local Cache] --> [Chem Processor]
+[Chem Processor] --> [Comparison Engine]
+[Comparison Engine] --> [Renderer]
+[Renderer] --> [Assembler]
+[Assembler] --> [Markdown Report]
+
+@enduml
