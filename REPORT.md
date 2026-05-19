@@ -13,6 +13,9 @@
 ## Molecular Structures
 
 ### Cortisol
+
+Cortisol, often called the 'stress hormone,' is a steroid hormone produced by the adrenal glands. It plays a vital role in regulating various processes throughout the body, including metabolism, immune response, and the body's response to stress. It is the primary glucocorticoid in humans.
+
 #### Spacefilling Model
 ![Cortisol Spacefilling](output/images/cortisol_spacefilling.png)
 
@@ -20,6 +23,9 @@
 ![Cortisol 3D](output/images/cortisol_3d.png)
 
 ### Cortisone
+
+Cortisone is a steroid hormone that is closely related to cortisol. It is biologically inactive and must be converted to cortisol by the enzyme 11β-hydroxysteroid dehydrogenase type 1 (11β-HSD1) to exert its effects. It is often used as a medication to reduce inflammation and treat various conditions.
+
 #### Spacefilling Model
 ![Cortisone Spacefilling](output/images/cortisone_spacefilling.png)
 

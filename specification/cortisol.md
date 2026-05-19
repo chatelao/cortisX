@@ -1,5 +1,7 @@
 # Cortisol (Hydrocortisone)
 
+Cortisol, often called the "stress hormone," is a steroid hormone produced by the adrenal glands. It plays a vital role in regulating various processes throughout the body, including metabolism, immune response, and the body's response to stress. It is the primary glucocorticoid in humans.
+
 - **PubChem CID**: 5754
 - **Molecular Formula**: C21H30O5
 - **Molecular Weight**: 362.5 g/mol
