@@ -12,7 +12,7 @@
 ## Goals
 
 - [ ] Comprehensive comparison of Cortisol and Cortisone ⏳
-- [ ] 3D rendered molecules for both substances ⏳
+- [x] 3D rendered molecules for both substances ✅ 2026-05-19T14:30:00Z
 - [ ] Detailed business and use cases ⏳
 - [ ] Automated LaTeX report generation and validation ⏳
 - [x] Automated CI/CD pipeline for documentation ✅ 2026-05-19T07:02:40Z
@@ -39,6 +39,7 @@
 - [x] Implement 2D chemical structure rendering script ✅ 2026-05-19T12:05:00Z
 - [x] Implement 3D molecular rendering script ✅ 2026-05-19T12:05:00Z
 - [x] Generate static renders for Cortisol and Cortisone ✅ 2026-05-19T12:05:00Z
+- [x] Implement 3D spacefilling rendering using Playwright ✅ 2026-05-19T14:30:00Z
 
 ### Phase 4: Final Report & README
 - [ ] Create `REPORT.md` template ⏳
