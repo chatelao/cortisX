@@ -40,6 +40,7 @@
 - [x] Implement 3D molecular rendering script ✅ 2026-05-19T12:05:00Z
 - [x] Generate static renders for Cortisol and Cortisone ✅ 2026-05-19T12:05:00Z
 - [x] Implement 3D spacefilling rendering using Playwright ✅ 2026-05-19T14:30:00Z
+- [x] Implement 3D animation rendering (GIF) using Playwright and Pillow ✅ 2026-05-19T16:00:00Z
 
 ### Phase 4: Final Report & README
 - [x] Create `REPORT.md` template ✅ 2026-05-19T14:40:00Z
