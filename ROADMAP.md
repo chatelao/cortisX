@@ -47,6 +47,7 @@
 - [x] Implement Assembler to populate report with data and renders ✅ 2026-05-19T14:40:00Z
 - [x] Implement LaTeX report generator in Assembler ✅ 2026-05-19T14:40:00Z
 - [x] Compile final findings into `REPORT.md` ✅ 2026-05-19T14:40:00Z
-- [ ] Integrate LaTeX validation into CI/CD pipeline ⏳
+- [x] Integrate LaTeX validation into CI/CD pipeline ✅ 2026-05-19T15:00:00Z
+- [x] Automate PDF generation and release ✅ 2026-05-19T15:00:00Z
 - [ ] Update `README.md` with project links ⏳
 - [x] Document related organs and proteins ✅ 2026-05-19T14:35:00Z
