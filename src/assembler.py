@@ -70,8 +70,9 @@ class Assembler:
             '~': r'\textasciitilde{}',
             '^': r'\textasciicircum{}',
             '\\': r'\textbackslash{}',
-            'β': r'$\beta$',
-            'α': r'$\alpha$'
+            'β': r'\texorpdfstring{$\beta$}{beta}',
+            'α': r'\texorpdfstring{$\alpha$}{alpha}',
+            '≈': r'$\approx$'
         }
         # Regex to find these characters
         # Sort keys by length descending to ensure longer sequences are matched first
