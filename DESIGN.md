@@ -19,6 +19,13 @@ The system follows a modular pipeline:
 3. **Renderer**: Generates PNG/SVG files for 2D formulas and 3D scenes.
 4. **Assembler**: Injects data and image links into `REPORT.md` and LaTeX templates.
 
+### Animation Workflow
+The rendering engine has been extended to support animated GIFs:
+1. The `Renderer` uses Playwright to load a 3Dmol.js environment.
+2. It executes a rotation function via JavaScript for a set number of frames (e.g., 20 frames for a full 360-degree rotation).
+3. Each frame is captured as a PNG screenshot.
+4. The screenshots are then assembled into an animated GIF using the `Pillow` (PIL) library with a specified duration and loop count.
+
 ## Technical Implementation Choice: Rendering Engine
 
 Three alternatives were considered for molecular rendering:
