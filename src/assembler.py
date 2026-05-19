@@ -11,6 +11,7 @@ class Assembler:
         self.chemicals = {}
         self.medical_comparison = ""
         self.organs_proteins = ""
+        self.medications_appendix = ""
 
     def load_data(self):
         """Loads data from cache and specification files."""
@@ -28,7 +29,12 @@ class Assembler:
             with open(organs_path, 'r') as f:
                 self.organs_proteins = f.read()
 
-        if not self.chemicals or not self.medical_comparison or not self.organs_proteins:
+        appendix_path = os.path.join(self.spec_dir, 'medications_appendix.md')
+        if os.path.exists(appendix_path):
+            with open(appendix_path, 'r') as f:
+                self.medications_appendix = f.read()
+
+        if not self.chemicals or not self.medical_comparison or not self.organs_proteins or not self.medications_appendix:
             print("Warning: Some source data is missing.")
             return False
         return True
@@ -167,6 +173,7 @@ class Assembler:
             md_report = md_template.replace('{{COMPARISON_TABLE}}', self.generate_markdown_table())
             md_report = md_report.replace('{{MEDICAL_CONTENT}}', self.medical_comparison)
             md_report = md_report.replace('{{ORGANS_CONTENT}}', self.organs_proteins)
+            md_report = md_report.replace('{{APPENDIX_CONTENT}}', self.medications_appendix)
 
             with open(output_md, 'w') as f:
                 f.write(md_report)
@@ -198,6 +205,7 @@ class Assembler:
             tex_report = tex_template.replace('{{COMPARISON_TABLE}}', tex_table)
             tex_report = tex_report.replace('{{MEDICAL_CONTENT}}', self.md_to_tex(self.medical_comparison))
             tex_report = tex_report.replace('{{ORGANS_CONTENT}}', self.md_to_tex(self.organs_proteins))
+            tex_report = tex_report.replace('{{APPENDIX_CONTENT}}', self.md_to_tex(self.medications_appendix))
 
             with open(output_tex, 'w') as f:
                 f.write(tex_report)
