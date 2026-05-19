@@ -64,6 +64,9 @@ async def render_3d_spacefilling(smiles, output_path):
             viewer.addModel(`{mol_block}`, "mol");
             viewer.setStyle({{ sphere: {{}} }});
             viewer.zoomTo();
+            viewer.rotate(20, 'x');
+            viewer.rotate(20, 'y');
+            viewer.zoom(0.8);
             viewer.render();
             // Signal that rendering is complete
             window.renderComplete = true;
