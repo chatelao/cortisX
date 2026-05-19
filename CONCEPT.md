@@ -21,7 +21,7 @@ The solution is structured into functional modules that handle the data lifecycl
 - **Data Acquisition Component**: Responsible for fetching chemical data (SMILES, molecular weight, etc.) and medical descriptions from reliable sources.
 - **Comparison Engine**: Analyzes the differences in molecular structure and physiological effects.
 - **Visualization Component**: Generates 2D chemical formulas and 3D molecular renders.
-- **Documentation Generator**: Compiles all data and visualizations into a structured Markdown format.
+- **Documentation Generator**: Compiles all data and visualizations into structured Markdown and LaTeX formats.
 
 ## Major Choice: Data Sourcing Strategy
 

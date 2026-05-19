@@ -18,6 +18,7 @@ package "Visualization" {
 package "Output" {
     [Assembler]
     [Markdown Report]
+    [LaTeX Report]
 }
 
 [Source Handler] --> [Local Cache]
@@ -26,5 +27,6 @@ package "Output" {
 [Comparison Engine] --> [Renderer]
 [Renderer] --> [Assembler]
 [Assembler] --> [Markdown Report]
+[Assembler] --> [LaTeX Report]
 
 @enduml

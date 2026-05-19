@@ -14,6 +14,7 @@
 - [ ] Comprehensive comparison of Cortisol and Cortisone ⏳
 - [ ] 3D rendered molecules for both substances ⏳
 - [ ] Detailed business and use cases ⏳
+- [ ] Automated LaTeX report generation and validation ⏳
 - [x] Automated CI/CD pipeline for documentation ✅ 2026-05-19T07:02:40Z
 
 ## Phases
@@ -41,6 +42,9 @@
 
 ### Phase 4: Final Report & README
 - [ ] Create `REPORT.md` template ⏳
+- [ ] Create LaTeX report template ⏳
 - [ ] Implement Assembler to populate report with data and renders ⏳
+- [ ] Implement LaTeX report generator in Assembler ⏳
 - [ ] Compile final findings into `REPORT.md` ⏳
+- [ ] Integrate LaTeX validation into CI/CD pipeline ⏳
 - [ ] Update `README.md` with project links ⏳

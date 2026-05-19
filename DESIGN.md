@@ -5,8 +5,8 @@
 - **Language**: Python 3.x for scripting, data processing, and interfacing with chemical tools.
 - **Data Acquisition**: `rdkit` and `PubChemPy` for retrieving and manipulating chemical data.
 - **3D Rendering**: `Py3Dmol` or `NGLView` for generating interactive and static 3D molecular renders.
-- **Documentation**: Markdown as the primary format, with `mkdocs` for generating a static site.
-- **CI/CD**: GitHub Actions for automated testing, rendering, and deployment.
+- **Documentation**: Markdown and LaTeX as the primary formats, with `mkdocs` for generating a static site.
+- **CI/CD**: GitHub Actions for automated testing, rendering, and LaTeX validation.
 
 ## Detailed Architecture
 
@@ -17,7 +17,7 @@ The system follows a modular pipeline:
 1. **Source Handler**: Interfaces with PubChem API to fetch SMILES and properties.
 2. **Chem Processor**: Uses RDKit to calculate descriptors and prepare data for rendering.
 3. **Renderer**: Generates PNG/SVG files for 2D formulas and 3D scenes.
-4. **Assembler**: Injects data and image links into the `REPORT.md` template.
+4. **Assembler**: Injects data and image links into `REPORT.md` and LaTeX templates.
 
 ## Technical Implementation Choice: Rendering Engine
 
