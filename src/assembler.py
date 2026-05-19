@@ -176,6 +176,12 @@ class Assembler:
             md_report = md_report.replace('{{ORGANS_CONTENT}}', self.organs_proteins)
             md_report = md_report.replace('{{APPENDIX_CONTENT}}', self.medications_appendix)
 
+            # Add chemical descriptions
+            for name, data in self.chemicals.items():
+                placeholder = "{{" + name.upper() + "_DESCRIPTION}}"
+                description = data.get('description', 'No description available.')
+                md_report = md_report.replace(placeholder, description)
+
             with open(output_md, 'w') as f:
                 f.write(md_report)
             print(f"Generated {output_md}")
@@ -207,6 +213,12 @@ class Assembler:
             tex_report = tex_report.replace('{{MEDICAL_CONTENT}}', self.md_to_tex(self.medical_comparison))
             tex_report = tex_report.replace('{{ORGANS_CONTENT}}', self.md_to_tex(self.organs_proteins))
             tex_report = tex_report.replace('{{APPENDIX_CONTENT}}', self.md_to_tex(self.medications_appendix))
+
+            # Add chemical descriptions
+            for name, data in self.chemicals.items():
+                placeholder = "{{" + name.upper() + "_DESCRIPTION}}"
+                description = data.get('description', 'No description available.')
+                tex_report = tex_report.replace(placeholder, self.escape_latex(description))
 
             with open(output_tex, 'w') as f:
                 f.write(tex_report)

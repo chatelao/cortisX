@@ -7,6 +7,9 @@
 ## Molecular Structures
 
 ### Cortisol
+
+{{CORTISOL_DESCRIPTION}}
+
 #### Spacefilling Model
 ![Cortisol Spacefilling](output/images/cortisol_spacefilling.png)
 
@@ -14,6 +17,9 @@
 ![Cortisol 3D](output/images/cortisol_3d.png)
 
 ### Cortisone
+
+{{CORTISONE_DESCRIPTION}}
+
 #### Spacefilling Model
 ![Cortisone Spacefilling](output/images/cortisone_spacefilling.png)
 
