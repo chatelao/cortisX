@@ -3,6 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches: [ "*" ]
+    tags: [ "v*" ]
   pull_request:
     branches: [ "*" ]
 
@@ -27,6 +28,8 @@ jobs:
 
     - name: Install dependencies
       run: |
+        sudo apt-get update
+        sudo apt-get install -y texlive-latex-base texlive-latex-extra texlive-fonts-recommended
         ./src/install.sh
         ./test/install.sh
         python3 -m playwright install --with-deps chromium
@@ -36,3 +39,23 @@ jobs:
         PYTHONPATH: .
       run: |
         pytest
+
+    - name: Generate artifacts
+      env:
+        PYTHONPATH: .
+      run: |
+        python3 src/renderer.py
+        python3 src/assembler.py
+
+    - name: Compile LaTeX to PDF
+      run: |
+        pdflatex -interaction=nonstopmode report.tex
+        pdflatex -interaction=nonstopmode report.tex
+
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          report.pdf
+          REPORT.md
