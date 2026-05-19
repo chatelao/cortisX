@@ -35,7 +35,7 @@ def render_3d(smiles, output_path):
     d2d.WriteDrawingText(output_path)
     return True
 
-async def render_3d_spacefilling(smiles, output_path):
+async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20):
     """Generates a 3D spacefilling PNG image from a SMILES string using 3Dmol.js and Playwright."""
     mol = Chem.MolFromSmiles(smiles)
     if not mol:
@@ -64,8 +64,8 @@ async def render_3d_spacefilling(smiles, output_path):
             viewer.addModel(`{mol_block}`, "mol");
             viewer.setStyle({{ sphere: {{}} }});
             viewer.zoomTo();
-            viewer.rotate(20, 'x');
-            viewer.rotate(20, 'y');
+            viewer.rotate({x_rot}, 'x');
+            viewer.rotate({y_rot}, 'y');
             viewer.zoom(0.8);
             viewer.render();
             // Signal that rendering is complete
@@ -124,11 +124,17 @@ async def generate_renders():
             print(f"Failed to generate 3D render for {name}")
 
         # 3D Spacefilling Rendering
-        path_sf = os.path.join(output_dir, f"{name.lower()}_spacefilling.png")
-        if await render_3d_spacefilling(smiles, path_sf):
-            print(f"Generated 3D spacefilling render for {name} at {path_sf}")
-        else:
-            print(f"Failed to generate 3D spacefilling render for {name}")
+        views = [
+            ("", 20, 20),
+            ("_backside", 20, 200),
+            ("_top", 110, 20)
+        ]
+        for suffix, x_rot, y_rot in views:
+            path_sf = os.path.join(output_dir, f"{name.lower()}_spacefilling{suffix}.png")
+            if await render_3d_spacefilling(smiles, path_sf, x_rot, y_rot):
+                print(f"Generated 3D spacefilling render ({suffix or 'front'}) for {name} at {path_sf}")
+            else:
+                print(f"Failed to generate 3D spacefilling render ({suffix or 'front'}) for {name}")
 
 if __name__ == "__main__":
     asyncio.run(generate_renders())
