@@ -1,3 +1,3 @@
 #!/bin/bash
 # Install test dependencies
-pip install pytest
+pip install pytest pytest-asyncio

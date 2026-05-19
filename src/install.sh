@@ -1,3 +1,3 @@
 #!/bin/bash
 # Install production dependencies
-pip install rdkit pubchempy
+pip install rdkit pubchempy py3Dmol playwright
