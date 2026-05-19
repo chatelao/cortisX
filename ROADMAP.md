@@ -48,3 +48,4 @@
 - [ ] Compile final findings into `REPORT.md` ⏳
 - [ ] Integrate LaTeX validation into CI/CD pipeline ⏳
 - [ ] Update `README.md` with project links ⏳
+- [x] Document related organs and proteins ✅ 2026-05-19T14:35:00Z
