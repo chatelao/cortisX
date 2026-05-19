@@ -69,3 +69,5 @@ jobs:
         files: |
           report.pdf
           REPORT.md
+          output/images/cortisol_animation.gif
+          output/images/cortisone_animation.gif
