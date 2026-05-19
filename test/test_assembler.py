@@ -32,13 +32,15 @@ def assembler(tmp_path):
         f.write("# Medical\nSome medical info with β and _underscore_.\n---\nNew section.")
     with open(spec_dir / "organs_proteins.md", "w") as f:
         f.write("# Organs\nSome organ info.")
+    with open(spec_dir / "medications_appendix.md", "w") as f:
+        f.write("# Appendix\nSome appendix info.")
 
     templates_dir = tmp_path / "templates"
     templates_dir.mkdir()
     with open(templates_dir / "report_template.md", "w") as f:
-        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{ORGANS_CONTENT}}")
+        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{ORGANS_CONTENT}}\n{{APPENDIX_CONTENT}}")
     with open(templates_dir / "report_template.tex", "w") as f:
-        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{ORGANS_CONTENT}}")
+        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{ORGANS_CONTENT}}\n{{APPENDIX_CONTENT}}")
 
     return Assembler(cache_path=str(cache_file), spec_dir=str(spec_dir)), templates_dir, tmp_path
 

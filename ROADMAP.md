@@ -51,3 +51,4 @@
 - [x] Automate PDF generation and release ✅ 2026-05-19T15:00:00Z
 - [ ] Update `README.md` with project links ⏳
 - [x] Document related organs and proteins ✅ 2026-05-19T14:35:00Z
+- [x] Add cortisol substitution medications appendix ✅ 2026-05-19T15:00:00Z

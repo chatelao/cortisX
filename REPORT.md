@@ -99,3 +99,19 @@ The kidneys play a crucial role in protecting the body from excess mineralocorti
 ### Transport Proteins
 - **Corticosteroid-binding globulin (CBG / Transcortin)**: A specialized protein that carries approximately 75-90% of circulating Cortisol in the blood, regulating its availability to tissues.
 - **Albumin**: A non-specific transport protein that binds a smaller fraction of circulating Cortisol.
+
+
+---
+
+# Appendix: Cortisol Substitution Medications
+
+The following table lists common medications used as substitutes for cortisol in various therapeutic contexts, along with their molecular formulas.
+
+| Medication | Molecular Formula |
+|------------|-------------------|
+| Prednisone | C21H26O5 |
+| Prednisolone | C21H28O5 |
+| Dexamethasone | C22H29FO5 |
+| Methylprednisolone | C22H30O5 |
+| Fludrocortisone | C21H29FO5 |
+| Betamethasone | C22H29FO5 |
