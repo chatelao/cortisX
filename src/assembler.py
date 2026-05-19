@@ -78,6 +78,7 @@ class Assembler:
             '\\': r'\textbackslash{}',
             'β': r'\texorpdfstring{$\beta$}{beta}',
             'α': r'\texorpdfstring{$\alpha$}{alpha}',
+            'κ': r'\texorpdfstring{$\kappa$}{kappa}',
             '≈': r'$\approx$'
         }
         # Regex to find these characters

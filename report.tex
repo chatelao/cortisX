@@ -103,9 +103,24 @@ Cortisol and Cortisone are closely related corticosteroids, but they differ in b
 \subsection{Activation Pathway}
 The conversion of Cortisone to Cortisol is mediated by the enzyme \textbf{11\texorpdfstring{$\beta$}{beta}-hydroxysteroid dehydrogenase type 1 (11\texorpdfstring{$\beta$}{beta}-HSD1)}, which is primarily located in the liver but also found in other tissues like adipose tissue and the brain.
 
+\subsection{Medical Quality and Pharmacological Properties}
+The medical quality of these molecules is defined by their biological activity and therapeutic efficacy.
+- \textbf{Cortisol (Hydrocortisone)}: As the active hormone, it represents the primary mediator of glucocorticoid effects. Its "medical quality" lies in its immediate availability for receptor binding, making it essential for acute replacement therapy and emergency situations (e.g., adrenal crisis).
+- \textbf{Cortisone}: Its quality as a medication is characterized by its role as a prodrug. It requires metabolic activation, which provides a slower onset of action compared to direct cortisol administration. This makes it suitable for chronic conditions where a steadier, less acute effect is desired.
+
 \subsection{Relative Potency}
 - \textbf{Cortisol}: Relative Potency = 1 (Reference standard).
-- \textbf{Cortisone}: Relative Potency $\approx$ 0.8. Cortisone is generally considered slightly less potent than Cortisol.
+- \textbf{Cortisone}: Relative Potency $\approx$ 0.8. Cortisone is generally considered slightly less potent than Cortisol due to the requirement for enzymatic activation.
+
+\subsection{Signaling Chain}
+The signaling pathway of Cortisol (and activated Cortisone) involves several distinct stages:
+1. \textbf{Cellular Entry}: Being lipophilic, Cortisol diffuses freely across the cell membrane into the cytoplasm.
+2. \textbf{Receptor Binding}: In the cytoplasm, Cortisol binds to the \textbf{Glucocorticoid Receptor (GR)}, which is typically held in an inactive state by a chaperone complex including \textbf{HSP90}, \textbf{HSP70}, and \textbf{FKBP4}.
+3. \textbf{Activation}: Binding triggers the dissociation of these chaperone proteins, leading to a conformational change and dimerization of the receptor.
+4. \textbf{Nuclear Translocation}: The activated Cortisol-GR complex translocates into the nucleus.
+5. \textbf{Biological Response}:
+    - \textbf{Transactivation}: The complex binds to specific DNA sequences called \textbf{Glucocorticoid Response Elements (GREs)}, stimulating the transcription of anti-inflammatory and metabolic genes.
+    - \textbf{Transrepression}: The complex can also interfere with the activity of other transcription factors, such as \textbf{NF-\texorpdfstring{$\kappa$}{kappa}B} or \textbf{AP-1}, thereby repressing the expression of pro-inflammatory genes.
 
 \subsection{Therapeutic Use Cases}
 \subsubsection{Cortisol (Hydrocortisone)}
@@ -146,10 +161,11 @@ The \textbf{Adrenal Cortex}, specifically the \textit{zona fasciculata}, is the 
 The liver is a major hub for the metabolism of these steroids. It is the primary site where \textbf{Cortisone is converted into active Cortisol} via the enzyme 11\texorpdfstring{$\beta$}{beta}-HSD1. It also handles the inactivation and conjugation of these hormones for excretion.
 
 \subsubsection{Hypothalamus and Pituitary Gland}
-These brain structures regulate Cortisol levels through the \textbf{HPA axis} (Hypothalamic-Pituitary-Adrenal axis).
-- The \textbf{Hypothalamus} releases Corticotropin-releasing hormone (CRH).
-- CRH stimulates the \textbf{Anterior Pituitary} to release Adrenocorticotropic hormone (ACTH).
-- ACTH then signals the Adrenal Glands to produce Cortisol.
+These brain structures regulate Cortisol levels through the \textbf{HPA axis} (Hypothalamic-Pituitary-Adrenal axis), serving as the primary control center for Cortisol production.
+- \textbf{Hypothalamus}: Releases \textbf{Corticotropin-releasing hormone (CRH)} in response to stress or circadian signals. It may also release \textbf{Arginine Vasopressin (AVP)}, which acts synergistically with CRH.
+- \textbf{Anterior Pituitary}: Stimulated by CRH and AVP, it releases \textbf{Adrenocorticotropic hormone (ACTH)} into the bloodstream.
+- \textbf{Other Controlling Factors}: Hormones like \textbf{Ghrelin} (the "hunger hormone") can also stimulate the release of ACTH and subsequently increase Cortisol levels.
+- \textbf{Negative Feedback}: High levels of circulating Cortisol inhibit the release of both CRH from the hypothalamus and ACTH from the pituitary, ensuring hormonal balance.
 
 \subsubsection{Kidneys}
 The kidneys play a crucial role in protecting the body from excess mineralocorticoid activity. While Cortisol can bind to both Glucocorticoid and Mineralocorticoid receptors, the kidneys use the enzyme \textbf{11\texorpdfstring{$\beta$}{beta}-HSD2} to convert Cortisol into inactive Cortisone, preventing it from over-activating Mineralocorticoid receptors in the renal tubules.
@@ -163,8 +179,22 @@ The kidneys play a crucial role in protecting the body from excess mineralocorti
 - \textbf{11\texorpdfstring{$\beta$}{beta}-hydroxysteroid dehydrogenase type 2 (11\texorpdfstring{$\beta$}{beta}-HSD2)}: Primarily converts active Cortisol into inactive Cortisone. It is highly expressed in the kidneys to prevent Cortisol from over-stimulating mineralocorticoid receptors.
 
 \subsubsection{Receptors}
-- \textbf{Glucocorticoid Receptor (GR)}: The primary receptor through which Cortisol exerts its metabolic and anti-inflammatory effects. It is found in almost every cell in the body.
-- \textbf{Mineralocorticoid Receptor (MR)}: While primarily intended for aldosterone, Cortisol has a high affinity for this receptor. Its action here is regulated by 11\texorpdfstring{$\beta$}{beta}-HSD2 in specific tissues like the kidneys.
+- \textbf{Glucocorticoid Receptor (NR3C1 / GR)}: The primary receptor through which Cortisol exerts its metabolic and anti-inflammatory effects.
+    - \textbf{Distribution}: Ubiquitously expressed across almost all tissues. High expression is noted in corticotrophs, neutrophils, and the liver.
+    - \textbf{Protein Atlas}: [NR3C1 Summary](https://www.proteinatlas.org/ENSG00000113580-NR3C1)
+- \textbf{Mineralocorticoid Receptor (NR3C2 / MR)}: While primarily intended for aldosterone, Cortisol has a high affinity for this receptor. Its action here is regulated by 11\texorpdfstring{$\beta$}{beta}-HSD2 in specific tissues.
+    - \textbf{Distribution}: Highly expressed in renal connecting and distal convoluted tubules, somatotrophs, and the choroid plexus. It is essential for regulating ion and water transport.
+    - \textbf{Protein Atlas}: [NR3C2 Summary](https://www.proteinatlas.org/ENSG00000151623-NR3C2)
+
+\subsubsection{Neighbouring Molecules (Steroidogenesis)}
+Cortisol is a product of the steroid biosynthetic pathway in the adrenal cortex. Its production involves several "neighbouring" molecules:
+- \textbf{Precursors}:
+    - \textbf{Cholesterol}: The initial building block.
+    - \textbf{Pregnenolone}: The first steroid in the chain.
+    - \textbf{Progesterone}: Converted into 17\texorpdfstring{$\alpha$}{alpha}-hydroxyprogesterone.
+    - \textbf{17\texorpdfstring{$\alpha$}{alpha}-Hydroxyprogesterone}: A key intermediate.
+    - \textbf{11-Deoxycortisol}: The immediate precursor to Cortisol.
+- \textbf{Enzymatic Conversion}: The final step in the synthesis of Cortisol is the conversion of 11-deoxycortisol by the enzyme \textbf{CYP11B1} (11\texorpdfstring{$\beta$}{beta}-hydroxylase).
 
 \subsubsection{Transport Proteins}
 - \textbf{Corticosteroid-binding globulin (CBG / Transcortin)}: A specialized protein that carries approximately 75-90\% of circulating Cortisol in the blood, regulating its availability to tissues.
