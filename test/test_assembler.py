@@ -34,13 +34,15 @@ def assembler(tmp_path):
         f.write("# Organs\nSome organ info.")
     with open(spec_dir / "medications_appendix.md", "w") as f:
         f.write("# Appendix\nSome appendix info.")
+    with open(spec_dir / "pregnancy.md", "w") as f:
+        f.write("# Pregnancy\nSome pregnancy info.")
 
     templates_dir = tmp_path / "templates"
     templates_dir.mkdir()
     with open(templates_dir / "report_template.md", "w") as f:
-        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{ORGANS_CONTENT}}\n{{APPENDIX_CONTENT}}")
+        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{PREGNANCY_CONTENT}}\n{{ORGANS_CONTENT}}\n{{APPENDIX_CONTENT}}")
     with open(templates_dir / "report_template.tex", "w") as f:
-        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{ORGANS_CONTENT}}\n{{APPENDIX_CONTENT}}")
+        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{PREGNANCY_CONTENT}}\n{{ORGANS_CONTENT}}\n{{APPENDIX_CONTENT}}")
 
     return Assembler(cache_path=str(cache_file), spec_dir=str(spec_dir)), templates_dir, tmp_path
 
@@ -50,6 +52,7 @@ def test_load_data(assembler):
     assert "TestChem" in a.chemicals
     assert "Chem_With_Special_Chars" in a.chemicals
     assert "# Medical" in a.medical_comparison
+    assert "# Pregnancy" in a.pregnancy_content
 
 def test_generate_markdown_table(assembler):
     a, _, _ = assembler
@@ -99,3 +102,4 @@ def test_assemble(assembler):
         assert r"Chem\_With\_Special\_Chars" in content
         assert r"$\beta$" in content
         assert "\\begin{tabular}{|l|l|l|}" in content # Property + 2 chemicals
+        assert "\\section{Pregnancy}" in content

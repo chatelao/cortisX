@@ -10,6 +10,7 @@ class Assembler:
         self.spec_dir = spec_dir
         self.chemicals = {}
         self.medical_comparison = ""
+        self.pregnancy_content = ""
         self.organs_proteins = ""
         self.medications_appendix = ""
 
@@ -34,7 +35,12 @@ class Assembler:
             with open(appendix_path, 'r') as f:
                 self.medications_appendix = f.read()
 
-        if not self.chemicals or not self.medical_comparison or not self.organs_proteins or not self.medications_appendix:
+        pregnancy_path = os.path.join(self.spec_dir, 'pregnancy.md')
+        if os.path.exists(pregnancy_path):
+            with open(pregnancy_path, 'r') as f:
+                self.pregnancy_content = f.read()
+
+        if not self.chemicals or not self.medical_comparison or not self.pregnancy_content or not self.organs_proteins or not self.medications_appendix:
             print("Warning: Some source data is missing.")
             return False
         return True
@@ -181,6 +187,7 @@ class Assembler:
 
             md_report = md_template.replace('{{COMPARISON_TABLE}}', self.generate_markdown_table())
             md_report = md_report.replace('{{MEDICAL_CONTENT}}', self.medical_comparison)
+            md_report = md_report.replace('{{PREGNANCY_CONTENT}}', self.pregnancy_content)
             md_report = md_report.replace('{{ORGANS_CONTENT}}', self.organs_proteins)
             md_report = md_report.replace('{{APPENDIX_CONTENT}}', self.medications_appendix)
 
@@ -219,6 +226,7 @@ class Assembler:
 
             tex_report = tex_template.replace('{{COMPARISON_TABLE}}', tex_table)
             tex_report = tex_report.replace('{{MEDICAL_CONTENT}}', self.md_to_tex(self.medical_comparison))
+            tex_report = tex_report.replace('{{PREGNANCY_CONTENT}}', self.md_to_tex(self.pregnancy_content))
             tex_report = tex_report.replace('{{ORGANS_CONTENT}}', self.md_to_tex(self.organs_proteins))
             tex_report = tex_report.replace('{{APPENDIX_CONTENT}}', self.md_to_tex(self.medications_appendix))
 

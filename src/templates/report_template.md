@@ -46,6 +46,10 @@
 
 ---
 
+{{PREGNANCY_CONTENT}}
+
+---
+
 {{ORGANS_CONTENT}}
 
 ---
