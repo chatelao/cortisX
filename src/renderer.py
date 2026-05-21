@@ -4,7 +4,9 @@ import asyncio
 from rdkit import Chem
 from rdkit.Chem import Draw
 from rdkit.Chem import AllChem
+from rdkit.Chem import rdMolTransforms
 from rdkit.Chem.Draw import MolDraw2DCairo
+import numpy as np
 from playwright.async_api import async_playwright
 from PIL import Image
 
@@ -28,6 +30,14 @@ def render_3d(smiles, output_path):
     params.randomSeed = 42
     if AllChem.EmbedMolecule(mol, params) == -1:
         return False
+
+    # Rotate 180 degrees around Y-axis to align with 2D model
+    # (A-ring on the right, D-ring on the left)
+    matrix = np.eye(4)
+    # Cos(180) = -1, Sin(180) = 0
+    matrix[0, 0] = -1
+    matrix[2, 2] = -1
+    rdMolTransforms.TransformConformer(mol.GetConformer(0), matrix)
 
     # Render the 3D conformation to a 2D PNG (pseudo-3D)
     d2d = MolDraw2DCairo(400, 400)
