@@ -18,14 +18,14 @@ async def render_enzyme(pdb_id, output_path):
             let viewer = $3Dmol.createViewer(element, config);
 
             $3Dmol.download("pdb:{pdb_id}", viewer, {{}}, function() {{
-                // Set global style
-                viewer.setStyle({{}}, {{ sphere: {{ color: 'lightgray', opacity: 0.8 }} }});
+                // Set global style: cartoon for protein structure
+                viewer.setStyle({{}}, {{ cartoon: {{ color: 'lightgray' }} }});
 
-                // Highlight Ligand (NDP)
-                viewer.addStyle({{ resn: 'NDP' }}, {{ sphere: {{ color: 'magenta' }} }});
+                // Highlight Ligand (NDP) as red spheres
+                viewer.addStyle({{ resn: 'NDP' }}, {{ sphere: {{ color: 'red' }} }});
 
-                // Highlight Catalytic Residues: Ser170, Tyr183, Lys187
-                viewer.addStyle({{ resi: [170, 183, 187], resn: ['SER', 'TYR', 'LYS'] }}, {{ sphere: {{ color: 'yellow' }} }});
+                // Highlight Catalytic Residues: Ser170, Tyr183, Lys187 as red spheres
+                viewer.addStyle({{ resi: [170, 183, 187], resn: ['SER', 'TYR', 'LYS'] }}, {{ sphere: {{ color: 'red' }} }});
 
                 viewer.zoomTo();
                 viewer.render();
