@@ -117,7 +117,7 @@ class Assembler:
                     in_table = True
                     cols = stripped.count('|') - 1
                     new_lines.append('\\begin{center}')
-                    new_lines.append('\\begin{tabular}{' + '|l' * cols + '|}')
+                    new_lines.append('\\begin{tabularx}{\\textwidth}{|' + 'X|' * cols + '}')
                     new_lines.append('\\hline')
                     content = stripped.strip('|').split('|')
                     content = [self.escape_latex(c.strip()) for c in content]
@@ -133,7 +133,7 @@ class Assembler:
             else:
                 if in_table:
                     in_table = False
-                    new_lines.append('\\end{tabular}')
+                    new_lines.append('\\end{tabularx}')
                     new_lines.append('\\end{center}')
 
                 # Apply LaTeX formatting FIRST for headers to preserve their structure
@@ -167,7 +167,7 @@ class Assembler:
                 new_lines.append(processed_line)
 
         if in_table:
-            new_lines.append('\\end{tabular}')
+            new_lines.append('\\end{tabularx}')
             new_lines.append('\\end{center}')
 
         return '\n'.join(new_lines)
@@ -208,7 +208,7 @@ class Assembler:
 
             # Dynamic LaTeX table for chemical properties
             num_chems = len(self.chemicals)
-            tex_table = "\\begin{center}\n\\begin{tabular}{|l|" + "l|" * num_chems + "}\n\\hline\n"
+            tex_table = "\\begin{center}\n\\begin{tabularx}{\\textwidth}{|l|" + "X|" * num_chems + "}\n\\hline\n"
             headers = ["Property"] + [self.escape_latex(name) for name in self.chemicals.keys()]
             tex_table += " & ".join(headers) + " \\\\\n\\hline\n"
 
@@ -222,7 +222,7 @@ class Assembler:
                 for chem in self.chemicals.values():
                     row.append(self.escape_latex(str(chem.get(key, "N/A"))))
                 tex_table += " & ".join(row) + " \\\\\n\\hline\n"
-            tex_table += "\\end{tabular}\n\\end{center}"
+            tex_table += "\\end{tabularx}\n\\end{center}"
 
             tex_report = tex_template.replace('{{COMPARISON_TABLE}}', tex_table)
             tex_report = tex_report.replace('{{MEDICAL_CONTENT}}', self.md_to_tex(self.medical_comparison))
