@@ -5,6 +5,7 @@
     "molecular_weight": 362.5,
     "smiles": "C[C@]12CCC(=O)C=C1CC[C@@H]3[C@@H]2[C@H](C[C@]4([C@H]3CC[C@@]4(C(=O)CO)O)C)O",
     "description": "Cortisol, often called the 'stress hormone,' is a steroid hormone produced by the adrenal glands. It plays a vital role in regulating various processes throughout the body, including metabolism, immune response, and the body's response to stress. It is the primary glucocorticoid in humans.",
+    "description_de": "Cortisol, oft als „Stresshormon“ bezeichnet, ist ein Steroidhormon, das in den Nebennieren produziert wird. Es spielt eine entscheidende Rolle bei der Regulierung verschiedener Prozesse im Körper, einschließlich des Stoffwechsels, der Immunantwort und der Reaktion des Körpers auf Stress. Es ist das primäre Glucocorticoid beim Menschen.",
     "last_updated": "2026-05-19T06:46:28Z"
   },
   "Cortisone": {
@@ -13,6 +14,7 @@
     "molecular_weight": 360.4,
     "smiles": "C[C@]12CCC(=O)C=C1CC[C@@H]3[C@@H]2C(=O)C[C@]4([C@H]3CC[C@@]4(C(=O)CO)O)C",
     "description": "Cortisone is a steroid hormone that is closely related to cortisol. It is biologically inactive and must be converted to cortisol by the enzyme 11\u03b2-hydroxysteroid dehydrogenase type 1 (11\u03b2-HSD1) to exert its effects. It is often used as a medication to reduce inflammation and treat various conditions.",
+    "description_de": "Cortison ist ein Steroidhormon, das eng mit Cortisol verwandt ist. Es ist biologisch inaktiv und muss durch das Enzym 11β-Hydroxysteroid-Dehydrogenase Typ 1 (11β-HSD1) in Cortisol umgewandelt werden, um seine Wirkung zu entfalten. Es wird häufig als Medikament zur Hemmung von Entzündungen und zur Behandlung verschiedener Erkrankungen eingesetzt.",
     "last_updated": "2026-05-19T06:46:28Z"
   }
 }
