@@ -56,6 +56,8 @@ Cortisol and Cortisone are closely related corticosteroids, but they differ in b
 ## Activation Pathway
 The conversion of Cortisone to Cortisol is mediated by the enzyme **11β-hydroxysteroid dehydrogenase type 1 (11β-HSD1)**, which is primarily located in the liver but also found in other tissues like adipose tissue and the brain.
 
+![11β-HSD1 Enzyme (PDB 1XU7) with highlighted Active Center (NDP and Catalytic Residues)](output/images/enzyme_11bhsd1.png)
+
 ## Medical Quality and Pharmacological Properties
 The medical quality of these molecules is defined by their biological activity and therapeutic efficacy.
 - **Cortisol (Hydrocortisone)**: As the active hormone, it represents the primary mediator of glucocorticoid effects. Its "medical quality" lies in its immediate availability for receptor binding, making it essential for acute replacement therapy and emergency situations (e.g., adrenal crisis).

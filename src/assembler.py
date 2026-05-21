@@ -144,12 +144,19 @@ class Assembler:
                     is_header = True
 
                 if not is_header:
-                    # Apply LaTeX escaping and then Markdown formatting for regular lines
-                    processed_line = self.escape_latex(processed_line)
-                    # Bold
-                    processed_line = re.sub(r'\*\*(.*?)\*\*', r'\\textbf{\1}', processed_line)
-                    # Italic
-                    processed_line = re.sub(r'\*(.*?)\*', r'\\textit{\1}', processed_line)
+                    # Special handling for images BEFORE general escaping
+                    image_match = re.search(r'!\[(.*?)\]\((.*?)\)', processed_line)
+                    if image_match:
+                        alt_text = self.escape_latex(image_match.group(1))
+                        image_path = image_match.group(2)
+                        processed_line = f"\\begin{{figure}}[h]\n\\centering\n\\includegraphics[width=0.6\\textwidth]{{{image_path}}}\n\\caption{{{alt_text}}}\n\\end{{figure}}"
+                    else:
+                        # Apply LaTeX escaping and then Markdown formatting for regular lines
+                        processed_line = self.escape_latex(processed_line)
+                        # Bold
+                        processed_line = re.sub(r'\*\*(.*?)\*\*', r'\\textbf{\1}', processed_line)
+                        # Italic
+                        processed_line = re.sub(r'\*(.*?)\*', r'\\textit{\1}', processed_line)
 
                 new_lines.append(processed_line)
 
