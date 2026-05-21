@@ -24,8 +24,10 @@ Cortisol, often called the 'stress hormone,' is a steroid hormone produced by th
 #### 3D Spacefilling Animation
 ![Cortisol Animation](output/images/cortisol_animation.gif)
 
-#### Pseudo-3D Stick Model
-![Cortisol 3D](output/images/cortisol_3d.png)
+#### 2D and Pseudo-3D Stick Models
+| 2D Model | Pseudo-3D Stick Model |
+| :---: | :---: |
+| ![Cortisol 2D](output/images/cortisol_2d.png) | ![Cortisol 3D](output/images/cortisol_3d.png) |
 
 ### Cortisone
 
@@ -39,8 +41,10 @@ Cortisone is a steroid hormone that is closely related to cortisol. It is biolog
 #### 3D Spacefilling Animation
 ![Cortisone Animation](output/images/cortisone_animation.gif)
 
-#### Pseudo-3D Stick Model
-![Cortisone 3D](output/images/cortisone_3d.png)
+#### 2D and Pseudo-3D Stick Models
+| 2D Model | Pseudo-3D Stick Model |
+| :---: | :---: |
+| ![Cortisone 2D](output/images/cortisone_2d.png) | ![Cortisone 3D](output/images/cortisone_3d.png) |
 
 ---
 
