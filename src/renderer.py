@@ -36,7 +36,7 @@ def render_3d(smiles, output_path):
     d2d.WriteDrawingText(output_path)
     return True
 
-async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20):
+async def render_3d_spacefilling(page, smiles, output_path, x_rot=20, y_rot=20):
     """Generates a 3D spacefilling PNG image from a SMILES string using 3Dmol.js and Playwright."""
     mol = Chem.MolFromSmiles(smiles)
     if not mol:
@@ -54,7 +54,7 @@ async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20):
     html_content = f"""
     <html>
     <head>
-        <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.2/3Dmol-min.js"></script>
     </head>
     <body>
         <div id="container" style="width: 400px; height: 400px; position: relative;"></div>
@@ -80,21 +80,18 @@ async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20):
     with open(temp_html, "w") as f:
         f.write(html_content)
 
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        page = await browser.new_page()
-        await page.goto(f"file://{os.path.abspath(temp_html)}")
+    try:
+        await page.goto(f"file://{os.path.abspath(temp_html)}", timeout=60000)
         # Wait for the viewer to signal render completion
-        await page.wait_for_function("window.renderComplete === true")
+        await page.wait_for_function("window.renderComplete === true", timeout=60000)
         await page.locator("#container").screenshot(path=output_path)
-        await browser.close()
-
-    if os.path.exists(temp_html):
-        os.remove(temp_html)
+    finally:
+        if os.path.exists(temp_html):
+            os.remove(temp_html)
 
     return True
 
-async def render_3d_animation(smiles, output_path, num_frames=20):
+async def render_3d_animation(page, smiles, output_path, num_frames=20):
     """Generates an animated 3D spacefilling GIF from a SMILES string using 3Dmol.js and Playwright."""
     mol = Chem.MolFromSmiles(smiles)
     if not mol:
@@ -112,7 +109,7 @@ async def render_3d_animation(smiles, output_path, num_frames=20):
     html_content = f"""
     <html>
     <head>
-        <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.2/3Dmol-min.js"></script>
     </head>
     <body>
         <div id="container" style="width: 400px; height: 400px; position: relative;"></div>
@@ -143,11 +140,9 @@ async def render_3d_animation(smiles, output_path, num_frames=20):
         f.write(html_content)
 
     frames = []
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        page = await browser.new_page()
-        await page.goto(f"file://{os.path.abspath(temp_html)}")
-        await page.wait_for_function("window.renderComplete === true")
+    try:
+        await page.goto(f"file://{os.path.abspath(temp_html)}", timeout=60000)
+        await page.wait_for_function("window.renderComplete === true", timeout=60000)
 
         angle_step = 360 / num_frames
         for i in range(num_frames):
@@ -156,28 +151,26 @@ async def render_3d_animation(smiles, output_path, num_frames=20):
             await page.locator("#container").screenshot(path=frame_path)
             frames.append(Image.open(frame_path))
 
-        await browser.close()
+        if frames:
+            frames[0].save(
+                output_path,
+                save_all=True,
+                append_images=frames[1:],
+                duration=100,
+                loop=0
+            )
+            # Close images to allow deletion
+            for img in frames:
+                img.close()
+    finally:
+        # Cleanup temp files
+        for i in range(num_frames):
+            frame_path = f"temp_frame_{i}.png"
+            if os.path.exists(frame_path):
+                os.remove(frame_path)
 
-    if frames:
-        frames[0].save(
-            output_path,
-            save_all=True,
-            append_images=frames[1:],
-            duration=100,
-            loop=0
-        )
-        # Close images to allow deletion
-        for img in frames:
-            img.close()
-
-    # Cleanup temp files
-    for i in range(num_frames):
-        frame_path = f"temp_frame_{i}.png"
-        if os.path.exists(frame_path):
-            os.remove(frame_path)
-
-    if os.path.exists(temp_html):
-        os.remove(temp_html)
+        if os.path.exists(temp_html):
+            os.remove(temp_html)
 
     return True
 
@@ -194,42 +187,48 @@ async def generate_renders():
     output_dir = 'output/images'
     os.makedirs(output_dir, exist_ok=True)
 
-    for name, info in data.items():
-        smiles = info['smiles']
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page()
 
-        # 2D Rendering
-        path_2d = os.path.join(output_dir, f"{name.lower()}_2d.png")
-        if render_2d(smiles, path_2d):
-            print(f"Generated 2D render for {name} at {path_2d}")
-        else:
-            print(f"Failed to generate 2D render for {name}")
+        for name, info in data.items():
+            smiles = info['smiles']
 
-        # 3D Rendering (Pseudo-3D)
-        path_3d = os.path.join(output_dir, f"{name.lower()}_3d.png")
-        if render_3d(smiles, path_3d):
-            print(f"Generated 3D render for {name} at {path_3d}")
-        else:
-            print(f"Failed to generate 3D render for {name}")
-
-        # 3D Spacefilling Rendering
-        views = [
-            ("", 20, 20),
-            ("_backside", 20, 200),
-            ("_top", 110, 20)
-        ]
-        for suffix, x_rot, y_rot in views:
-            path_sf = os.path.join(output_dir, f"{name.lower()}_spacefilling{suffix}.png")
-            if await render_3d_spacefilling(smiles, path_sf, x_rot, y_rot):
-                print(f"Generated 3D spacefilling render ({suffix or 'front'}) for {name} at {path_sf}")
+            # 2D Rendering
+            path_2d = os.path.join(output_dir, f"{name.lower()}_2d.png")
+            if render_2d(smiles, path_2d):
+                print(f"Generated 2D render for {name} at {path_2d}")
             else:
-                print(f"Failed to generate 3D spacefilling render ({suffix or 'front'}) for {name}")
+                print(f"Failed to generate 2D render for {name}")
 
-        # 3D Animation Rendering
-        path_anim = os.path.join(output_dir, f"{name.lower()}_animation.gif")
-        if await render_3d_animation(smiles, path_anim):
-            print(f"Generated 3D animation for {name} at {path_anim}")
-        else:
-            print(f"Failed to generate 3D animation for {name}")
+            # 3D Rendering (Pseudo-3D)
+            path_3d = os.path.join(output_dir, f"{name.lower()}_3d.png")
+            if render_3d(smiles, path_3d):
+                print(f"Generated 3D render for {name} at {path_3d}")
+            else:
+                print(f"Failed to generate 3D render for {name}")
+
+            # 3D Spacefilling Rendering
+            views = [
+                ("", 20, 20),
+                ("_backside", 20, 200),
+                ("_top", 110, 20)
+            ]
+            for suffix, x_rot, y_rot in views:
+                path_sf = os.path.join(output_dir, f"{name.lower()}_spacefilling{suffix}.png")
+                if await render_3d_spacefilling(page, smiles, path_sf, x_rot, y_rot):
+                    print(f"Generated 3D spacefilling render ({suffix or 'front'}) for {name} at {path_sf}")
+                else:
+                    print(f"Failed to generate 3D spacefilling render ({suffix or 'front'}) for {name}")
+
+            # 3D Animation Rendering
+            path_anim = os.path.join(output_dir, f"{name.lower()}_animation.gif")
+            if await render_3d_animation(page, smiles, path_anim):
+                print(f"Generated 3D animation for {name} at {path_anim}")
+            else:
+                print(f"Failed to generate 3D animation for {name}")
+
+        await browser.close()
 
 if __name__ == "__main__":
     asyncio.run(generate_renders())
