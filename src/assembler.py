@@ -14,52 +14,62 @@ class Assembler:
         self.organs_proteins = ""
         self.medications_appendix = ""
 
-    def load_data(self):
+    def load_data(self, lang='en'):
         """Loads data from cache and specification files."""
         if os.path.exists(self.cache_path):
             with open(self.cache_path, 'r') as f:
                 self.chemicals = json.load(f)
 
-        med_path = os.path.join(self.spec_dir, 'medical_comparison.md')
+        suffix = f"_{lang}" if lang != 'en' else ""
+
+        med_path = os.path.join(self.spec_dir, f'medical_comparison{suffix}.md')
         if os.path.exists(med_path):
             with open(med_path, 'r') as f:
                 self.medical_comparison = f.read()
 
-        organs_path = os.path.join(self.spec_dir, 'organs_proteins.md')
+        organs_path = os.path.join(self.spec_dir, f'organs_proteins{suffix}.md')
         if os.path.exists(organs_path):
             with open(organs_path, 'r') as f:
                 self.organs_proteins = f.read()
 
-        appendix_path = os.path.join(self.spec_dir, 'medications_appendix.md')
+        appendix_path = os.path.join(self.spec_dir, f'medications_appendix{suffix}.md')
         if os.path.exists(appendix_path):
             with open(appendix_path, 'r') as f:
                 self.medications_appendix = f.read()
 
-        pregnancy_path = os.path.join(self.spec_dir, 'pregnancy.md')
+        pregnancy_path = os.path.join(self.spec_dir, f'pregnancy{suffix}.md')
         if os.path.exists(pregnancy_path):
             with open(pregnancy_path, 'r') as f:
                 self.pregnancy_content = f.read()
 
         if not self.chemicals or not self.medical_comparison or not self.pregnancy_content or not self.organs_proteins or not self.medications_appendix:
-            print("Warning: Some source data is missing.")
+            print(f"Warning: Some source data is missing for language '{lang}'.")
             return False
         return True
 
-    def generate_markdown_table(self):
+    def generate_markdown_table(self, lang='en'):
         """Generates a Markdown comparison table for the chemicals."""
         if not self.chemicals:
             return "No chemical data available."
 
-        headers = ["Property"] + list(self.chemicals.keys())
+        prop_label = "Property" if lang == 'en' else "Eigenschaft"
+        headers = [prop_label] + list(self.chemicals.keys())
         table = "| " + " | ".join(headers) + " |\n"
         table += "| " + " | ".join(["---"] * len(headers)) + " |\n"
 
-        properties = [
+        properties_en = [
             ("PubChem CID", "cid"),
             ("Molecular Formula", "molecular_formula"),
             ("Molecular Weight (g/mol)", "molecular_weight"),
             ("SMILES", "smiles")
         ]
+        properties_de = [
+            ("PubChem CID", "cid"),
+            ("Summenformel", "molecular_formula"),
+            ("Molekulargewicht (g/mol)", "molecular_weight"),
+            ("SMILES", "smiles")
+        ]
+        properties = properties_en if lang == 'en' else properties_de
 
         for label, key in properties:
             row = [label]
@@ -172,29 +182,41 @@ class Assembler:
 
         return '\n'.join(new_lines)
 
-    def assemble(self, md_template_path='src/templates/report_template.md',
-                 tex_template_path='src/templates/report_template.tex',
-                 output_md='REPORT.md', output_tex='report.tex'):
+    def assemble(self, lang='en',
+                 md_template_path=None,
+                 tex_template_path=None,
+                 output_md=None, output_tex=None):
         """Populates templates and writes the final reports."""
-        if not self.load_data():
-            print("Aborting assembly due to missing data.")
+        if not self.load_data(lang=lang):
+            print(f"Aborting assembly for '{lang}' due to missing data.")
             return
+
+        suffix = f"_{lang}" if lang != 'en' else ""
+        if md_template_path is None:
+            md_template_path = f'src/templates/report_template{suffix}.md'
+        if tex_template_path is None:
+            tex_template_path = f'src/templates/report_template{suffix}.tex'
+        if output_md is None:
+            output_md = 'REPORT.md' if lang == 'en' else 'BERICHT.md'
+        if output_tex is None:
+            output_tex = 'report.tex' if lang == 'en' else 'bericht.tex'
 
         # Generate Markdown Report
         if os.path.exists(md_template_path):
             with open(md_template_path, 'r') as f:
                 md_template = f.read()
 
-            md_report = md_template.replace('{{COMPARISON_TABLE}}', self.generate_markdown_table())
+            md_report = md_template.replace('{{COMPARISON_TABLE}}', self.generate_markdown_table(lang=lang))
             md_report = md_report.replace('{{MEDICAL_CONTENT}}', self.medical_comparison)
             md_report = md_report.replace('{{PREGNANCY_CONTENT}}', self.pregnancy_content)
             md_report = md_report.replace('{{ORGANS_CONTENT}}', self.organs_proteins)
             md_report = md_report.replace('{{APPENDIX_CONTENT}}', self.medications_appendix)
 
             # Add chemical descriptions
+            desc_key = 'description' if lang == 'en' else f'description_{lang}'
             for name, data in self.chemicals.items():
                 placeholder = "{{" + name.upper() + "_DESCRIPTION}}"
-                description = data.get('description', 'No description available.')
+                description = data.get(desc_key, data.get('description', 'No description available.'))
                 md_report = md_report.replace(placeholder, description)
 
             with open(output_md, 'w') as f:
@@ -209,14 +231,22 @@ class Assembler:
             # Dynamic LaTeX table for chemical properties
             num_chems = len(self.chemicals)
             tex_table = "\\begin{center}\n\\begin{tabularx}{\\textwidth}{|l|" + "X|" * num_chems + "}\n\\hline\n"
-            headers = ["Property"] + [self.escape_latex(name) for name in self.chemicals.keys()]
+            prop_label = "Property" if lang == 'en' else "Eigenschaft"
+            headers = [prop_label] + [self.escape_latex(name) for name in self.chemicals.keys()]
             tex_table += " & ".join(headers) + " \\\\\n\\hline\n"
 
-            properties = [
+            properties_en = [
                 ("PubChem CID", "cid"),
                 ("Molecular Formula", "molecular_formula"),
                 ("Molecular Weight", "molecular_weight")
             ]
+            properties_de = [
+                ("PubChem CID", "cid"),
+                ("Summenformel", "molecular_formula"),
+                ("Molekulargewicht", "molecular_weight")
+            ]
+            properties = properties_en if lang == 'en' else properties_de
+
             for label, key in properties:
                 row = [self.escape_latex(label)]
                 for chem in self.chemicals.values():
@@ -231,9 +261,10 @@ class Assembler:
             tex_report = tex_report.replace('{{APPENDIX_CONTENT}}', self.md_to_tex(self.medications_appendix))
 
             # Add chemical descriptions
+            desc_key = 'description' if lang == 'en' else f'description_{lang}'
             for name, data in self.chemicals.items():
                 placeholder = "{{" + name.upper() + "_DESCRIPTION}}"
-                description = data.get('description', 'No description available.')
+                description = data.get(desc_key, data.get('description', 'No description available.'))
                 tex_report = tex_report.replace(placeholder, self.escape_latex(description))
 
             with open(output_tex, 'w') as f:
@@ -242,4 +273,7 @@ class Assembler:
 
 if __name__ == "__main__":
     assembler = Assembler()
-    assembler.assemble()
+    # Generate English report
+    assembler.assemble(lang='en')
+    # Generate German report
+    assembler.assemble(lang='de')

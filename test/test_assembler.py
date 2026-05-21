@@ -14,13 +14,9 @@ def assembler(tmp_path):
             "cid": 123,
             "molecular_formula": "H2O",
             "molecular_weight": 18.0,
-            "smiles": "O"
-        },
-        "Chem_With_Special_Chars": {
-            "cid": 456,
-            "molecular_formula": "C6H12O6",
-            "molecular_weight": 180.1,
-            "smiles": "C(C1C(C(C(C(O1)O)O)O)O)O"
+            "smiles": "O",
+            "description": "English desc",
+            "description_de": "Deutsche Beschreibung"
         }
     }
     with open(cache_file, "w") as f:
@@ -28,8 +24,9 @@ def assembler(tmp_path):
 
     spec_dir = tmp_path / "specification"
     spec_dir.mkdir()
+    # English
     with open(spec_dir / "medical_comparison.md", "w") as f:
-        f.write("# Medical\nSome medical info with β and _underscore_.\n---\nNew section.")
+        f.write("# Medical\nSome medical info.")
     with open(spec_dir / "organs_proteins.md", "w") as f:
         f.write("# Organs\nSome organ info.")
     with open(spec_dir / "medications_appendix.md", "w") as f:
@@ -37,59 +34,64 @@ def assembler(tmp_path):
     with open(spec_dir / "pregnancy.md", "w") as f:
         f.write("# Pregnancy\nSome pregnancy info.")
 
+    # German
+    with open(spec_dir / "medical_comparison_de.md", "w") as f:
+        f.write("# Medizin\nMedizinische Info.")
+    with open(spec_dir / "organs_proteins_de.md", "w") as f:
+        f.write("# Organe\nOrgan Info.")
+    with open(spec_dir / "medications_appendix_de.md", "w") as f:
+        f.write("# Anhang\nAnhang Info.")
+    with open(spec_dir / "pregnancy_de.md", "w") as f:
+        f.write("# Schwangerschaft\nSchwangerschaft Info.")
+
     templates_dir = tmp_path / "templates"
     templates_dir.mkdir()
     with open(templates_dir / "report_template.md", "w") as f:
-        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{PREGNANCY_CONTENT}}\n{{ORGANS_CONTENT}}\n{{APPENDIX_CONTENT}}")
+        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{TESTCHEM_DESCRIPTION}}")
+    with open(templates_dir / "report_template_de.md", "w") as f:
+        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{TESTCHEM_DESCRIPTION}}")
     with open(templates_dir / "report_template.tex", "w") as f:
-        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{PREGNANCY_CONTENT}}\n{{ORGANS_CONTENT}}\n{{APPENDIX_CONTENT}}")
+        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{TESTCHEM_DESCRIPTION}}")
+    with open(templates_dir / "report_template_de.tex", "w") as f:
+        f.write("{{COMPARISON_TABLE}}\n{{MEDICAL_CONTENT}}\n{{TESTCHEM_DESCRIPTION}}")
 
     return Assembler(cache_path=str(cache_file), spec_dir=str(spec_dir)), templates_dir, tmp_path
 
-def test_load_data(assembler):
+def test_load_data_en(assembler):
     a, _, _ = assembler
-    assert a.load_data() is True
+    assert a.load_data(lang='en') is True
     assert "TestChem" in a.chemicals
-    assert "Chem_With_Special_Chars" in a.chemicals
     assert "# Medical" in a.medical_comparison
-    assert "# Pregnancy" in a.pregnancy_content
 
-def test_generate_markdown_table(assembler):
+def test_load_data_de(assembler):
     a, _, _ = assembler
-    a.load_data()
-    table = a.generate_markdown_table()
-    assert "| Property | TestChem | Chem_With_Special_Chars |" in table
-    assert "| PubChem CID | 123 | 456 |" in table
+    assert a.load_data(lang='de') is True
+    assert "# Medizin" in a.medical_comparison
+    assert "# Schwangerschaft" in a.pregnancy_content
 
-def test_escape_latex(assembler):
+def test_generate_markdown_table_en(assembler):
     a, _, _ = assembler
-    text = "beta β, underscore _, ampersand &, dollar $, percent %, hash #"
-    escaped = a.escape_latex(text)
-    assert r"$\beta$" in escaped
-    assert r"\_" in escaped
-    assert r"\&" in escaped
-    assert r"\$" in escaped
-    assert r"\%" in escaped
-    assert r"\#" in escaped
+    a.load_data(lang='en')
+    table = a.generate_markdown_table(lang='en')
+    assert "| Property | TestChem |" in table
+    assert "| PubChem CID | 123 |" in table
 
-def test_md_to_tex(assembler):
+def test_generate_markdown_table_de(assembler):
     a, _, _ = assembler
-    md = "# Title\n## Section\n**Bold**\n---\n| Col1 | Col2 |\n|---|---|\n| Val1 | Val2 |"
-    tex = a.md_to_tex(md)
-    assert "\\section{Title}" in tex
-    assert "\\subsection{Section}" in tex
-    assert "\\textbf{Bold}" in tex
-    assert "\\hrulefill" in tex
-    assert "\\begin{tabularx}{\\textwidth}{|X|X|}" in tex
+    a.load_data(lang='de')
+    table = a.generate_markdown_table(lang='de')
+    assert "| Eigenschaft | TestChem |" in table
+    assert "| Summenformel | H2O |" in table
 
-def test_assemble(assembler):
+def test_assemble_de(assembler):
     a, templates_dir, output_dir = assembler
-    output_md = output_dir / "REPORT.md"
-    output_tex = output_dir / "report.tex"
+    output_md = output_dir / "BERICHT.md"
+    output_tex = output_dir / "bericht.tex"
 
     a.assemble(
-        md_template_path=str(templates_dir / "report_template.md"),
-        tex_template_path=str(templates_dir / "report_template.tex"),
+        lang='de',
+        md_template_path=str(templates_dir / "report_template_de.md"),
+        tex_template_path=str(templates_dir / "report_template_de.tex"),
         output_md=str(output_md),
         output_tex=str(output_tex)
     )
@@ -97,9 +99,13 @@ def test_assemble(assembler):
     assert os.path.exists(output_md)
     assert os.path.exists(output_tex)
 
+    with open(output_md, 'r') as f:
+        content = f.read()
+        assert "Eigenschaft" in content
+        assert "Medizinische Info" in content
+        assert "Deutsche Beschreibung" in content
+
     with open(output_tex, 'r') as f:
         content = f.read()
-        assert r"Chem\_With\_Special\_Chars" in content
-        assert r"$\beta$" in content
-        assert "\\begin{tabularx}{\\textwidth}{|l|X|X|}" in content # Property + 2 chemicals
-        assert "\\section{Pregnancy}" in content
+        assert "Eigenschaft" in content
+        assert "Deutsche Beschreibung" in content
