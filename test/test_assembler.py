@@ -80,7 +80,7 @@ def test_md_to_tex(assembler):
     assert "\\subsection{Section}" in tex
     assert "\\textbf{Bold}" in tex
     assert "\\hrulefill" in tex
-    assert "\\begin{tabular}{|l|l|}" in tex
+    assert "\\begin{tabularx}{\\textwidth}{|X|X|}" in tex
 
 def test_assemble(assembler):
     a, templates_dir, output_dir = assembler
@@ -101,5 +101,5 @@ def test_assemble(assembler):
         content = f.read()
         assert r"Chem\_With\_Special\_Chars" in content
         assert r"$\beta$" in content
-        assert "\\begin{tabular}{|l|l|l|}" in content # Property + 2 chemicals
+        assert "\\begin{tabularx}{\\textwidth}{|l|X|X|}" in content # Property + 2 chemicals
         assert "\\section{Pregnancy}" in content
