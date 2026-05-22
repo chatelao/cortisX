@@ -12,5 +12,3 @@ Cortisone is a steroid hormone that is closely related to cortisol. It is biolog
 ### Spacefilling Model
 ![Cortisone Spacefilling](../output/images/cortisone_spacefilling.png)
 
-### Pseudo-3D Stick Model
-![Cortisone 3D](../output/images/cortisone_3d.png)
