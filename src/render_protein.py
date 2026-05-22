@@ -24,11 +24,10 @@ def download_and_filter_pdb(pdb_id, excluded_chains):
 
     return "\n".join(filtered_lines)
 
-async def render_enzyme(pdb_id, output_path):
+async def render_enzyme(pdb_id, output_path, excluded_chains, style_chains):
     """Generates a 3D PNG image of the filtered enzyme."""
 
-    # Filter out chains A and B (Lower Half)
-    pdb_content = download_and_filter_pdb(pdb_id, ['A', 'B'])
+    pdb_content = download_and_filter_pdb(pdb_id, excluded_chains)
     if not pdb_content:
         return False
 
@@ -52,27 +51,26 @@ async def render_enzyme(pdb_id, output_path):
 
             // 1. Draw backbone
             // Helices: Yellow
-            viewer.setStyle({{chain: ['C', 'D'], ss: 'h'}}, {{ cartoon: {{ color: 'yellow' }} }});
+            viewer.setStyle({{chain: {style_chains}, ss: 'h'}}, {{ cartoon: {{ color: 'yellow' }} }});
             // Sheets: Yellow with big arrows
-            viewer.addStyle({{chain: ['C', 'D'], ss: 's'}}, {{ cartoon: {{ color: 'yellow', arrows: true, width: 1.2, thickness: 0.6 }} }});
+            viewer.addStyle({{chain: {style_chains}, ss: 's'}}, {{ cartoon: {{ color: 'yellow', arrows: true, width: 1.2, thickness: 0.6 }} }});
             // Coils: Thinner tube
-            viewer.addStyle({{chain: ['C', 'D'], ss: 'c'}}, {{ tube: {{ color: 'lightblue', radius: 0.1 }} }});
+            viewer.addStyle({{chain: {style_chains}, ss: 'c'}}, {{ tube: {{ color: 'lightblue', radius: 0.1 }} }});
 
             // 2. Draw all sidechains as sticks
             // General sidechains: Very faint light grey to avoid clutter
-            viewer.addStyle({{chain: ['C', 'D'], atom: ['N', 'CA', 'C', 'O'], invert: true, hetatm: false}},
+            viewer.addStyle({{chain: {style_chains}, atom: ['N', 'CA', 'C', 'O'], invert: true, hetatm: false}},
                             {{ stick: {{ radius: 0.05, color: '#eeeeee', opacity: 0.2 }} }});
 
             // "Magenta inside helices": Thicker magenta sticks for sidechains of helical residues
-            viewer.addStyle({{chain: ['C', 'D'], ss: 'h', atom: ['N', 'CA', 'C', 'O'], invert: true, hetatm: false}},
+            viewer.addStyle({{chain: {style_chains}, ss: 'h', atom: ['N', 'CA', 'C', 'O'], invert: true, hetatm: false}},
                             {{ stick: {{ color: 'magenta', radius: 0.15, opacity: 0.8 }} }});
 
             // 3. Sulfur atoms as small yellow balls
             viewer.addStyle({{ elem: 'S' }}, {{ sphere: {{ color: 'yellow', radius: 0.3 }} }});
 
-            // 4. Highlight Ligands (NDP, CPS)
-            // Lighter green and semi-transparent sticks as requested
-            viewer.addStyle({{ resn: ['NDP', 'CPS'] }},
+            // 4. Highlight Ligands (NDP, CPS, or others)
+            viewer.addStyle({{ hetatm: true }},
                             {{ stick: {{ color: '#98FB98', opacity: 0.6, radius: 0.25 }} }});
 
             // 5. Catalytic Residues (Ser170, Tyr183, Lys187) as bright green sticks
@@ -87,7 +85,7 @@ async def render_enzyme(pdb_id, output_path):
     </html>
     """
 
-    temp_html = "temp_protein.html"
+    temp_html = f"temp_{pdb_id}.html"
     with open(temp_html, "w") as f:
         f.write(html_content)
 
@@ -107,11 +105,20 @@ async def render_enzyme(pdb_id, output_path):
 
     return True
 
-if __name__ == "__main__":
+async def main():
     output_dir = 'output/images'
     os.makedirs(output_dir, exist_ok=True)
-    path_enzyme = os.path.join(output_dir, "enzyme_11bhsd1.png")
 
-    print(f"Rendering filtered enzyme 1XU7 to {path_enzyme}...")
-    asyncio.run(render_enzyme("1XU7", path_enzyme))
+    # Variant 1: 1XU7
+    path_1xu7 = os.path.join(output_dir, "enzyme_11bhsd1.png")
+    print(f"Rendering 1XU7 to {path_1xu7}...")
+    await render_enzyme("1XU7", path_1xu7, excluded_chains=['A', 'B'], style_chains=['C', 'D'])
+
+    # Variant 2: 3OQ1
+    path_3oq1 = os.path.join(output_dir, "enzyme_3oq1.png")
+    print(f"Rendering 3OQ1 to {path_3oq1}...")
+    await render_enzyme("3OQ1", path_3oq1, excluded_chains=['B', 'C'], style_chains=['A', 'D'])
     print("Done.")
+
+if __name__ == "__main__":
+    asyncio.run(main())
