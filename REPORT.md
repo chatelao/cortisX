@@ -60,7 +60,11 @@ The conversion of Cortisone to Cortisol is mediated by the enzyme **11β-hydroxy
 
 ![Chemical Balance: Cortisone <=> Cortisol](output/images/chemical_balance.png)
 
-![11β-HSD1 Enzyme (PDB 1XU7) with highlighted Active Center (NDP and Catalytic Residues)](output/images/enzyme_11bhsd1.png)
+![11β-HSD1 Enzyme (PDB 1XU7) with Active Center (NDP in green, Steroid-Inhibitor BVT in magenta)](output/images/enzyme_11bhsd1.png)
+
+#### 3D Enzyme Animation
+![11β-HSD1 Animation](output/images/enzyme_11bhsd1_animation.gif)
+*Note: The animation shows the human 11β-HSD1 enzyme (PDB 1XU7). To illustrate the binding pocket for Cortisone/Cortisol, the steroid-like inhibitor BVT (magenta) and the cofactor NDP (green) are embedded.*
 
 ## Medical Quality and Pharmacological Properties
 The medical quality of these molecules is defined by their biological activity and therapeutic efficacy.

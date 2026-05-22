@@ -60,7 +60,11 @@ Die Umwandlung von Cortison in Cortisol wird durch das Enzym **11β-Hydroxystero
 
 ![Chemisches Gleichgewicht: Cortison <=> Cortisol](output/images/chemical_balance.png)
 
-![11β-HSD1 Enzym (PDB 1XU7) mit hervorgehobenem aktivem Zentrum (NDP und katalytische Reste)](output/images/enzyme_11bhsd1.png)
+![11β-HSD1 Enzym (PDB 1XU7) mit aktivem Zentrum (NDP in grün, Steroid-Inhibitor BVT in magenta)](output/images/enzyme_11bhsd1.png)
+
+#### 3D-Enzym-Animation
+![11β-HSD1 Animation](output/images/enzyme_11bhsd1_animation.gif)
+*Hinweis: Die Animation zeigt das menschliche 11β-HSD1-Enzym (PDB 1XU7). Zur Veranschaulichung der Bindungstasche für Cortison/Cortisol ist der steroidähnliche Inhibitor BVT (magenta) sowie der Cofaktor NDP (grün) eingebettet.*
 
 ## Medizinische Qualität und pharmakologische Eigenschaften
 Die medizinische Qualität dieser Moleküle wird durch ihre biologische Aktivität und therapeutische Wirksamkeit definiert.

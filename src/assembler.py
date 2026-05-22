@@ -167,7 +167,10 @@ class Assembler:
                 # Apply LaTeX formatting FIRST for headers to preserve their structure
                 processed_line = line
                 is_header = False
-                if processed_line.startswith('### '):
+                if processed_line.startswith('#### '):
+                    processed_line = f'\\subsubsection*{{{self.escape_latex(processed_line[5:])}}}'
+                    is_header = True
+                elif processed_line.startswith('### '):
                     processed_line = f'\\subsubsection{{{self.escape_latex(processed_line[4:])}}}'
                     is_header = True
                 elif processed_line.startswith('## '):
