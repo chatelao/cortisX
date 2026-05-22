@@ -1,5 +1,7 @@
 # Bericht: Vergleich von Cortisol und Cortison
 
+![Chemische Bilanz](output/images/chemical_balance.png)
+
 ## Chemischer Vergleich
 
 {{COMPARISON_TABLE}}
