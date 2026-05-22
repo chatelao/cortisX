@@ -62,9 +62,13 @@ async def render_enzyme(pdb_id, output_path, excluded_chains, style_chains):
             viewer.addStyle({{chain: {style_chains}, atom: ['N', 'CA', 'C', 'O'], invert: true, hetatm: false}},
                             {{ stick: {{ radius: 0.05, color: '#eeeeee', opacity: 0.2 }} }});
 
-            // "Magenta inside helices": Thicker magenta sticks for sidechains of helical residues
+            // Atom-colored sticks for sidechains of helical residues (C: black, H: grey, O: lightred, S: yellow)
             viewer.addStyle({{chain: {style_chains}, ss: 'h', atom: ['N', 'CA', 'C', 'O'], invert: true, hetatm: false}},
-                            {{ stick: {{ color: 'magenta', radius: 0.15, opacity: 0.8 }} }});
+                            {{ stick: {{
+                                colorscheme: {{ prop: 'elem', map: {{ C: 'black', H: 'grey', O: '#FF8080', S: 'yellow', N: 'blue' }} }},
+                                radius: 0.15,
+                                opacity: 0.8
+                            }} }});
 
             // 3. Sulfur atoms as small yellow balls
             viewer.addStyle({{ elem: 'S' }}, {{ sphere: {{ color: 'yellow', radius: 0.3 }} }});
