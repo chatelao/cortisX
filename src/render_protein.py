@@ -41,7 +41,7 @@ async def render_enzyme(pdb_id, output_path):
         <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.2/3Dmol-min.js"></script>
     </head>
     <body>
-        <div id="container" style="width: 800px; height: 600px; position: relative;"></div>
+        <div id="container" style="width: 1200px; height: 900px; position: relative;"></div>
         <script>
             let element = document.getElementById('container');
             let config = {{ backgroundColor: 'white' }};
@@ -50,14 +50,26 @@ async def render_enzyme(pdb_id, output_path):
             let pdbData = `{pdb_content_js}`;
             viewer.addModel(pdbData, "pdb");
 
-            // Style the remaining chains (C and D - Upper Half)
-            viewer.setStyle({{chain: ['C', 'D']}}, {{ cartoon: {{ color: 'lightgray' }} }});
+            // Base style: Loops/Coils as cyan cartoon
+            viewer.setStyle({{chain: ['C', 'D']}}, {{ cartoon: {{ color: 'cyan', radius: 0.3 }} }});
 
-            // Highlight Ligand (NDP) as red spheres
-            viewer.addStyle({{ resn: 'NDP' }}, {{ sphere: {{ color: 'red' }} }});
+            // Alpha Helices: yellow cartoon
+            viewer.addStyle({{chain: ['C', 'D'], ss: 'h'}}, {{ cartoon: {{ color: 'yellow' }} }});
 
-            // Highlight Catalytic Residues: Ser170, Tyr183, Lys187 as red spheres
-            viewer.addStyle({{ resi: [170, 183, 187], resn: ['SER', 'TYR', 'LYS'] }}, {{ sphere: {{ color: 'red' }} }});
+            // Beta Sheets: magenta cartoon (arrows)
+            viewer.addStyle({{chain: ['C', 'D'], ss: 's'}}, {{ cartoon: {{ color: 'magenta', width: 1.2, thickness: 0.6 }} }});
+
+            // Helical sidechains: purple sticks
+            viewer.addStyle({{chain: ['C', 'D'], ss: 'h'}}, {{ stick: {{ color: 'purple', radius: 0.15, opacity: 0.8 }} }});
+
+            // Sulfur atoms: yellow spheres
+            viewer.addStyle({{element: 'S'}}, {{ sphere: {{ color: 'yellow', radius: 0.3 }} }});
+
+            // Ligand (NDP): light green ball-and-stick
+            viewer.addStyle({{ resn: 'NDP' }}, {{ stick: {{ color: 'lightgreen', radius: 0.35 }}, sphere: {{ color: 'lightgreen', radius: 0.55 }} }});
+
+            // Catalytic residues (Ser170, Tyr183, Lys187): bright green sticks
+            viewer.addStyle({{ resi: [170, 183, 187], resn: ['SER', 'TYR', 'LYS'] }}, {{ stick: {{ color: 'lime', radius: 0.25 }} }});
 
             viewer.zoomTo();
             viewer.render();
@@ -74,7 +86,7 @@ async def render_enzyme(pdb_id, output_path):
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page()
-        await page.set_viewport_size({"width": 800, "height": 600})
+        await page.set_viewport_size({"width": 1200, "height": 900})
         await page.goto(f"file://{os.path.abspath(temp_html)}")
 
         await page.wait_for_function("window.renderComplete === true", timeout=60000)
