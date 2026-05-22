@@ -10,11 +10,21 @@ import numpy as np
 from playwright.async_api import async_playwright
 from PIL import Image, ImageDraw, ImageFont
 
-def render_2d(smiles, output_path, highlight_atoms=None, highlight_color=(0, 1, 0)):
-    """Generates a 2D PNG image from a SMILES string with optional highlighting."""
+def render_2d(smiles, output_path, highlight_atoms=None, highlight_color=(0, 1, 0), rotate_180=False):
+    """Generates a 2D PNG image from a SMILES string with optional highlighting and rotation."""
     mol = Chem.MolFromSmiles(smiles)
     if not mol:
         return False
+
+    # Generate 2D coordinates
+    AllChem.Compute2DCoords(mol)
+
+    if rotate_180:
+        # Rotate 180 degrees around Z-axis (2D rotation)
+        matrix = np.eye(4)
+        matrix[0, 0] = -1
+        matrix[1, 1] = -1
+        rdMolTransforms.TransformConformer(mol.GetConformer(0), matrix)
 
     d2d = MolDraw2DCairo(400, 400)
     if highlight_atoms:
@@ -230,8 +240,8 @@ def render_balance(output_path):
     # We target the C-ring C11. C3=O is in A-ring (conjugated).
     # C17-OH has a sidechain.
     # C11 is not conjugated and has no sidechain.
-    smarts_cortisol = "[CH;R2]([OH])"
-    smarts_cortisone = "[C;R2](=O)"
+    smarts_cortisol = "[CH;R]([OH])"
+    smarts_cortisone = "[C;R](=O)"
 
     match_cortisol = mol_cortisol.GetSubstructMatches(Chem.MolFromSmarts(smarts_cortisol))
     match_cortisone = mol_cortisone.GetSubstructMatches(Chem.MolFromSmarts(smarts_cortisone))
@@ -265,11 +275,11 @@ def render_balance(output_path):
             highlight_cortisone.extend(match)
             break
 
-    # Render individual 2D images with highlights
+    # Render individual 2D images with highlights and 180-degree rotation
     temp_cortisol = "temp_cortisol_2d.png"
     temp_cortisone = "temp_cortisone_2d.png"
-    render_2d(cortisol_smiles, temp_cortisol, highlight_atoms=highlight_cortisol)
-    render_2d(cortisone_smiles, temp_cortisone, highlight_atoms=highlight_cortisone)
+    render_2d(cortisol_smiles, temp_cortisol, highlight_atoms=highlight_cortisol, rotate_180=True)
+    render_2d(cortisone_smiles, temp_cortisone, highlight_atoms=highlight_cortisone, rotate_180=True)
 
     img_cortisol = Image.open(temp_cortisol)
     img_cortisone = Image.open(temp_cortisone)
