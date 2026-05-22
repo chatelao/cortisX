@@ -137,9 +137,9 @@ Die Leber ist ein zentraler Knotenpunkt für den Stoffwechsel dieser Steroide. S
 
 ### Hypothalamus und Hypophyse
 Diese Gehirnstrukturen regulieren den Cortisolspiegel über die **HPA-Achse** (Hypothalamus-Hypophysen-Nebennierenrinden-Achse) und dienen als primäres Kontrollzentrum für die Cortisolproduktion.
-- **Hypothalamus**: Setzt als Reaktion auf Stress oder zirkadiane Signale das **Corticotropin-releasing Hormone (CRH)** frei. Er kann auch **Arginin-Vasopressin (AVP)** freisetzen, das synergistisch mit CRH wirkt.
-- **Vorderlappen der Hypophyse**: Wird durch CRH und AVP stimuliert und gibt **adrenocorticotropes Hormon (ACTH)** in den Blutkreislauf ab.
-- **Andere kontrollierende Faktoren**: Hormone wie **Ghrelin** (das „Hungerhormon“) können ebenfalls die Freisetzung von ACTH stimulieren und anschließend den Cortisolspiegel erhöhen.
+- **Hypothalamus**: Setzt als Reaktion auf Stress oder zirkadiane Signale das **[Corticotropin-releasing Hormone (CRH)](https://www.proteinatlas.org/ENSG00000147571-CRH)** frei. Er kann auch **[Arginin-Vasopressin (AVP)](https://www.proteinatlas.org/ENSG00000101200-AVP)** freisetzen, das synergistisch mit CRH wirkt.
+- **Vorderlappen der Hypophyse**: Wird durch CRH und AVP stimuliert und gibt **[adrenocorticotropes Hormon (ACTH)](https://www.proteinatlas.org/ENSG00000115138-POMC)** in den Blutkreislauf ab.
+- **Andere kontrollierende Faktoren**: Hormone wie **[Ghrelin](https://www.proteinatlas.org/ENSG00000157017-GHRL)** (das „Hungerhormon“) können ebenfalls die Freisetzung von ACTH stimulieren und anschließend den Cortisolspiegel erhöhen.
 - **Negative Rückkopplung**: Hohe Spiegel an zirkulierendem Cortisol hemmen die Freisetzung von sowohl CRH aus dem Hypothalamus als auch ACTH aus der Hypophyse und gewährleisten so das hormonelle Gleichgewicht.
 
 ### Nieren

@@ -185,8 +185,31 @@ class Assembler:
                         image_path = image_match.group(2)
                         processed_line = f"\\begin{{figure}}[h]\n\\centering\n\\includegraphics[width=0.6\\textwidth]{{{image_path}}}\n\\caption{{{alt_text}}}\n\\end{{figure}}"
                     else:
-                        # Apply LaTeX escaping and then Markdown formatting for regular lines
+                        # Extract links to avoid escaping them
+                        links = []
+                        def placeholder(match):
+                            links.append(match.groups())
+                            return f"LINKPLACEHOLDER{len(links)-1}"
+
+                        processed_line = re.sub(r'\[(.*?)\]\((.*?)\)', placeholder, processed_line)
+
+                        # Apply LaTeX escaping for the rest of the text
                         processed_line = self.escape_latex(processed_line)
+
+                        # Restore links with proper LaTeX format
+                        for i, (text, url) in enumerate(links):
+                            # The URL should NOT be escaped by our simple escape_latex as it's used in \href
+                            # But hyphens are fine. Underscores in URLs might need care.
+                            # \href handles underscores if you use the right packages or escape them.
+                            # Since we already escaped the rest of the line, and URLs here are protein atlas URLs
+                            # which mostly use hyphens, it should be fine.
+                            # We should escape underscores in URL for \href just in case.
+                            url_tex = url.replace('_', r'\_').replace('%', r'\%').replace('#', r'\#')
+                            text_tex = self.escape_latex(text)
+                            # HTML subscripts in link text
+                            text_tex = re.sub(r'<sub>(.*?)</sub>', r'\\textsubscript{\1}', text_tex)
+                            processed_line = processed_line.replace(f"LINKPLACEHOLDER{i}", f"\\href{{{url_tex}}}{{{text_tex}}}")
+
                         # HTML subscripts to LaTeX
                         processed_line = re.sub(r'<sub>(.*?)</sub>', r'\\textsubscript{\1}', processed_line)
                         # Bold
