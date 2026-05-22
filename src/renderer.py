@@ -8,7 +8,7 @@ from rdkit.Chem import rdMolTransforms
 from rdkit.Chem.Draw import MolDraw2DCairo
 import numpy as np
 from playwright.async_api import async_playwright
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 def render_2d(smiles, output_path):
     """Generates a 2D PNG image from a SMILES string."""
@@ -191,6 +191,91 @@ async def render_3d_animation(smiles, output_path, num_frames=20):
 
     return True
 
+def render_balance(output_path):
+    """Generates a composite 'chemical balance' image of Cortisone <=> Cortisol."""
+    cache_path = 'src/cache/chemicals.json'
+    if not os.path.exists(cache_path):
+        return False
+
+    with open(cache_path, 'r') as f:
+        data = json.load(f)
+
+    cortisol_smiles = data.get("Cortisol", {}).get("smiles")
+    cortisone_smiles = data.get("Cortisone", {}).get("smiles")
+
+    if not cortisol_smiles or not cortisone_smiles:
+        return False
+
+    # Render individual 2D images
+    temp_cortisol = "temp_cortisol_2d.png"
+    temp_cortisone = "temp_cortisone_2d.png"
+    render_2d(cortisol_smiles, temp_cortisol)
+    render_2d(cortisone_smiles, temp_cortisone)
+
+    img_cortisol = Image.open(temp_cortisol)
+    img_cortisone = Image.open(temp_cortisone)
+
+    # Create canvas
+    canvas_width = 1000
+    canvas_height = 400
+    canvas = Image.new('RGB', (canvas_width, canvas_height), 'white')
+    draw = ImageDraw.Draw(canvas)
+
+    # Positions
+    y_offset = 50
+    canvas.paste(img_cortisone, (50, y_offset))
+    canvas.paste(img_cortisol, (550, y_offset))
+
+    # Try to load a font that supports Greek characters
+    font_paths = [
+        "/usr/share/fonts/truetype/freefont/FreeSans.ttf",
+        "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        "/usr/share/fonts/liberation/LiberationSans-Regular.ttf"
+    ]
+    font = None
+    for path in font_paths:
+        if os.path.exists(path):
+            try:
+                font = ImageFont.truetype(path, 24)
+                label_font = ImageFont.truetype(path, 28)
+                break
+            except:
+                continue
+
+    if not font:
+        font = ImageFont.load_default()
+        label_font = ImageFont.load_default()
+
+    # Draw labels
+    draw.text((250, 350), "Cortisone", fill="black", font=label_font, anchor="mm")
+    draw.text((750, 350), "Cortisol", fill="black", font=label_font, anchor="mm")
+
+    # Draw arrows
+    arrow_y_top = 180
+    arrow_y_bottom = 220
+    arrow_x_start = 420
+    arrow_x_end = 580
+
+    # Top arrow (Right)
+    draw.line([(arrow_x_start, arrow_y_top), (arrow_x_end, arrow_y_top)], fill="black", width=3)
+    draw.polygon([(arrow_x_end, arrow_y_top), (arrow_x_end-10, arrow_y_top-5), (arrow_x_end-10, arrow_y_top+5)], fill="black")
+    draw.text(((arrow_x_start + arrow_x_end)//2, arrow_y_top - 30), "11β-HSD1", fill="black", font=font, anchor="mm")
+
+    # Bottom arrow (Left)
+    draw.line([(arrow_x_start, arrow_y_bottom), (arrow_x_end, arrow_y_bottom)], fill="black", width=3)
+    draw.polygon([(arrow_x_start, arrow_y_bottom), (arrow_x_start+10, arrow_y_bottom-5), (arrow_x_start+10, arrow_y_bottom+5)], fill="black")
+    draw.text(((arrow_x_start + arrow_x_end)//2, arrow_y_bottom + 30), "11β-HSD2", fill="black", font=font, anchor="mm")
+
+    canvas.save(output_path)
+
+    # Cleanup
+    img_cortisol.close()
+    img_cortisone.close()
+    os.remove(temp_cortisol)
+    os.remove(temp_cortisone)
+
+    return True
+
 async def generate_renders():
     """Reads chemicals from cache and generates renders."""
     cache_path = 'src/cache/chemicals.json'
@@ -203,6 +288,13 @@ async def generate_renders():
 
     output_dir = 'output/images'
     os.makedirs(output_dir, exist_ok=True)
+
+    # Chemical Balance Rendering
+    path_balance = os.path.join(output_dir, "chemical_balance.png")
+    if render_balance(path_balance):
+        print(f"Generated chemical balance render at {path_balance}")
+    else:
+        print("Failed to generate chemical balance render")
 
     for name, info in data.items():
         smiles = info['smiles']

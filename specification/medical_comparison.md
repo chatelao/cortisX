@@ -8,7 +8,9 @@ Cortisol and Cortisone are closely related corticosteroids, but they differ in b
 - **Cortisone**: A prodrug (biologically inactive). It must be converted into Cortisol to become active.
 
 ## Activation Pathway
-The conversion of Cortisone to Cortisol is mediated by the enzyme **11β-hydroxysteroid dehydrogenase type 1 (11β-HSD1)**, which is primarily located in the liver but also found in other tissues like adipose tissue and the brain.
+The conversion of Cortisone to Cortisol is mediated by the enzyme **11β-hydroxysteroid dehydrogenase type 1 (11β-HSD1)**, which is primarily located in the liver but also found in other tissues like adipose tissue and the brain. Conversely, Cortisol is converted back to Cortisone by **11β-HSD2**, primarily in the kidneys.
+
+![Chemical Balance: Cortisone <=> Cortisol](output/images/chemical_balance.png)
 
 ![11β-HSD1 Enzyme (PDB 1XU7) with highlighted Active Center (NDP and Catalytic Residues)](output/images/enzyme_11bhsd1.png)
 

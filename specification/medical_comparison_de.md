@@ -8,7 +8,9 @@ Cortisol und Cortison sind eng verwandte Corticosteroide, unterscheiden sich jed
 - **Cortison**: Ein Prodrug (biologisch inaktiv). Es muss in Cortisol umgewandelt werden, um aktiv zu werden.
 
 ## Aktivierungsweg
-Die Umwandlung von Cortison in Cortisol wird durch das Enzym **11β-Hydroxysteroid-Dehydrogenase Typ 1 (11β-HSD1)** vermittelt, das sich hauptsächlich in der Leber befindet, aber auch in anderen Geweben wie dem Fettgewebe und dem Gehirn vorkommt.
+Die Umwandlung von Cortison in Cortisol wird durch das Enzym **11β-Hydroxysteroid-Dehydrogenase Typ 1 (11β-HSD1)** vermittelt, das sich hauptsächlich in der Leber befindet, aber auch in anderen Geweben wie dem Fettgewebe und dem Gehirn vorkommt. Umgekehrt wird Cortisol durch **11β-HSD2**, vor allem in den Nieren, wieder in Cortison umgewandelt.
+
+![Chemisches Gleichgewicht: Cortison <=> Cortisol](output/images/chemical_balance.png)
 
 ![11β-HSD1 Enzym (PDB 1XU7) mit hervorgehobenem aktivem Zentrum (NDP und katalytische Reste)](output/images/enzyme_11bhsd1.png)
 
