@@ -53,14 +53,14 @@ async def render_enzyme(pdb_id, output_path):
             // Base style: Loops/Coils as cyan cartoon
             viewer.setStyle({{chain: ['C', 'D']}}, {{ cartoon: {{ color: 'cyan', radius: 0.3 }} }});
 
-            // Alpha Helices: yellow cartoon
-            viewer.addStyle({{chain: ['C', 'D'], ss: 'h'}}, {{ cartoon: {{ color: 'yellow' }} }});
+            // Alpha Helices: yellow cartoon (semi-transparent)
+            viewer.addStyle({{chain: ['C', 'D'], ss: 'h'}}, {{ cartoon: {{ color: 'yellow', opacity: 0.6 }} }});
 
-            // Beta Sheets: magenta cartoon (arrows)
-            viewer.addStyle({{chain: ['C', 'D'], ss: 's'}}, {{ cartoon: {{ color: 'magenta', width: 1.2, thickness: 0.6 }} }});
+            // Beta Sheets: yellow cartoon (semi-transparent)
+            viewer.addStyle({{chain: ['C', 'D'], ss: 's'}}, {{ cartoon: {{ color: 'yellow', opacity: 0.6, width: 1.2, thickness: 0.6 }} }});
 
-            // Helical sidechains: purple sticks
-            viewer.addStyle({{chain: ['C', 'D'], ss: 'h'}}, {{ stick: {{ color: 'purple', radius: 0.15, opacity: 0.8 }} }});
+            // Helical sidechains: purple sticks (semi-transparent)
+            viewer.addStyle({{chain: ['C', 'D'], ss: 'h'}}, {{ stick: {{ color: 'purple', radius: 0.15, opacity: 0.4 }} }});
 
             // Sulfur atoms: yellow spheres
             viewer.addStyle({{element: 'S'}}, {{ sphere: {{ color: 'yellow', radius: 0.3 }} }});
@@ -68,8 +68,8 @@ async def render_enzyme(pdb_id, output_path):
             // Ligand (NDP): light green ball-and-stick
             viewer.addStyle({{ resn: 'NDP' }}, {{ stick: {{ color: 'lightgreen', radius: 0.35 }}, sphere: {{ color: 'lightgreen', radius: 0.55 }} }});
 
-            // Catalytic residues (Ser170, Tyr183, Lys187): bright green sticks
-            viewer.addStyle({{ resi: [170, 183, 187], resn: ['SER', 'TYR', 'LYS'] }}, {{ stick: {{ color: 'lime', radius: 0.25 }} }});
+            // Catalytic residues (Ser170, Tyr183, Lys187): red sticks
+            viewer.addStyle({{ resi: [170, 183, 187], resn: ['SER', 'TYR', 'LYS'] }}, {{ stick: {{ color: 'red', radius: 0.3 }} }});
 
             viewer.zoomTo();
             viewer.render();
