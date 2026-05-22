@@ -81,7 +81,7 @@ def test_generate_markdown_table_de(assembler):
     a.load_data(lang='de')
     table = a.generate_markdown_table(lang='de')
     assert "| Eigenschaft | TestChem |" in table
-    assert "| Summenformel | H2O |" in table
+    assert "| Summenformel | H<sub>2</sub>O |" in table
 
 def test_assemble_de(assembler):
     a, templates_dir, output_dir = assembler
