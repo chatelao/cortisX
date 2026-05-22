@@ -4,8 +4,8 @@
     "molecular_formula": "C21H30O5",
     "molecular_weight": 362.5,
     "smiles": "C[C@]12CCC(=O)C=C1CC[C@@H]3[C@@H]2[C@H](C[C@]4([C@H]3CC[C@@]4(C(=O)CO)O)C)O",
-    "description": "Cortisol, often called the 'stress hormone,' is a steroid hormone produced by the adrenal glands. It plays a vital role in regulating various processes throughout the body, including metabolism, immune response, and the body's response to stress. It is the primary glucocorticoid in humans.",
-    "description_de": "Cortisol, oft als „Stresshormon“ bezeichnet, ist ein Steroidhormon, das in den Nebennieren produziert wird. Es spielt eine entscheidende Rolle bei der Regulierung verschiedener Prozesse im Körper, einschließlich des Stoffwechsels, der Immunantwort und der Reaktion des Körpers auf Stress. Es ist das primäre Glucocorticoid beim Menschen.",
+    "description": "Cortisol, often called the 'stress hormone,' is a steroid hormone produced by the adrenal cortex. It plays a vital role in regulating various processes throughout the body, including metabolism, immune response, and the body's response to stress. It is the primary glucocorticoid in humans.",
+    "description_de": "Cortisol, oft als „Stresshormon“ bezeichnet, ist ein Steroidhormon, das in der Nebennierenrinde produziert wird. Es spielt eine entscheidende Rolle bei der Regulierung verschiedener Prozesse im Körper, einschließlich des Stoffwechsels, der Immunantwort und der Reaktion des Körpers auf Stress. Es ist das primäre Glucocorticoid beim Menschen.",
     "last_updated": "2026-05-19T06:46:28Z"
   },
   "Cortisone": {

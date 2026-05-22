@@ -16,7 +16,7 @@
 
 ### Cortisol
 
-Cortisol, often called the 'stress hormone,' is a steroid hormone produced by the adrenal glands. It plays a vital role in regulating various processes throughout the body, including metabolism, immune response, and the body's response to stress. It is the primary glucocorticoid in humans.
+Cortisol, often called the 'stress hormone,' is a steroid hormone produced by the adrenal cortex. It plays a vital role in regulating various processes throughout the body, including metabolism, immune response, and the body's response to stress. It is the primary glucocorticoid in humans.
 
 #### Spacefilling Model
 | Front View | Backside View | Top View |
@@ -62,9 +62,9 @@ The conversion of Cortisone to Cortisol is mediated by the enzyme **11β-hydroxy
 
 ![11β-HSD1 Enzyme (PDB 1XU7) with highlighted Active Center (NDP and Catalytic Residues)](output/images/enzyme_11bhsd1.png)
 
-## Medical Quality and Pharmacological Properties
-The medical quality of these molecules is defined by their biological activity and therapeutic efficacy.
-- **Cortisol (Hydrocortisone)**: As the active hormone, it represents the primary mediator of glucocorticoid effects. Its "medical quality" lies in its immediate availability for receptor binding, making it essential for acute replacement therapy and emergency situations (e.g., adrenal crisis).
+## Pharmacological Significance and Clinical Relevance
+The clinical relevance of these molecules is defined by their biological activity and therapeutic efficacy.
+- **Cortisol (Hydrocortisone)**: As the active hormone, it represents the primary mediator of glucocorticoid effects. Its pharmacological significance lies in its immediate availability for receptor binding, making it essential for acute replacement therapy and emergency situations (e.g., Addisonian crisis).
 - **Cortisone**: Its quality as a medication is characterized by its role as a prodrug. It requires metabolic activation, which provides a slower onset of action compared to direct cortisol administration. This makes it suitable for chronic conditions where a steadier, less acute effect is desired.
 
 ## Relative Potency
@@ -74,9 +74,9 @@ The medical quality of these molecules is defined by their biological activity a
 ## Signaling Chain
 The signaling pathway of Cortisol (and activated Cortisone) involves several distinct stages:
 1. **Cellular Entry**: Being lipophilic, Cortisol diffuses freely across the cell membrane into the cytoplasm.
-2. **Receptor Binding**: In the cytoplasm, Cortisol binds to the **Glucocorticoid Receptor (GR)**, which is typically held in an inactive state by a chaperone complex including **HSP90**, **HSP70**, and **FKBP4**.
-3. **Activation**: Binding triggers the dissociation of these chaperone proteins, leading to a conformational change and dimerization of the receptor.
-4. **Nuclear Translocation**: The activated Cortisol-GR complex translocates into the nucleus.
+2. **Receptor Binding**: In the cytoplasm, Cortisol binds to the **Glucocorticoid Receptor (GR)**, which is typically held in an inactive state by a chaperone complex including **HSP90**, **HSP70**, and **FKBP5** (which reduces binding affinity).
+3. **Activation**: Binding triggers the dissociation of these chaperone proteins. During this process, FKBP5 is often replaced by **FKBP4**, which supports the conformational change and increases binding affinity.
+4. **Nuclear Translocation**: The activated Cortisol-GR complex translocates into the nucleus, with FKBP4 mediating the interaction with the dynein transport protein.
 5. **Biological Response**:
     - **Transactivation**: The complex binds to specific DNA sequences called **Glucocorticoid Response Elements (GREs)**, stimulating the transcription of anti-inflammatory and metabolic genes.
     - **Transrepression**: The complex can also interfere with the activity of other transcription factors, such as **NF-κB** or **AP-1**, thereby repressing the expression of pro-inflammatory genes.
@@ -88,7 +88,7 @@ The signaling pathway of Cortisol (and activated Cortisone) involves several dis
 - **Topical Applications**: Common in creams for skin inflammation and itching.
 
 ### Cortisone
-- **Joint and Tendon Inflammation**: Often administered via local injection (e.g., for bursitis or arthritis).
+- **Joint and Tendon Inflammation**: Historically known as "cortisone shots," though today synthetic derivatives like triamcinolone or direct-acting hydrocortisone are mostly used, as cortisone would first need to be activated locally.
 - **Systemic Inflammation**: Used orally for various autoimmune and inflammatory conditions where a prodrug approach is acceptable.
 
 ## Key Differences
@@ -96,8 +96,8 @@ The signaling pathway of Cortisol (and activated Cortisone) involves several dis
 |---------|---------------------------|-----------|
 | **Form** | Active Hormone | Inactive Prodrug |
 | **Primary Site of Action** | Systemic / Tissues | Must be activated in Liver/Tissues |
-| **Half-life** | ~1.5 - 2 hours | Slightly longer (due to conversion) |
-| **Mineralocorticoid Activity** | High (comparatively) | Low |
+| **Half-life** | Plasma: ~1.5 - 2 h; Biological: 8 - 12 h | Plasma: ~0.5 - 1 h (rapid activation) |
+| **Mineralocorticoid Activity** | High (potential), but enzymatically protected | None (inactive at receptor) |
 
 
 ---
@@ -138,7 +138,7 @@ The liver is a major hub for the metabolism of these steroids. It is the primary
 ### Hypothalamus and Pituitary Gland
 These brain structures regulate Cortisol levels through the **HPA axis** (Hypothalamic-Pituitary-Adrenal axis), serving as the primary control center for Cortisol production.
 - **Hypothalamus**: Releases **[Corticotropin-releasing hormone (CRH)](https://www.proteinatlas.org/ENSG00000147571-CRH)** in response to stress or circadian signals. It may also release **[Arginine Vasopressin (AVP)](https://www.proteinatlas.org/ENSG00000101200-AVP)**, which acts synergistically with CRH.
-- **Anterior Pituitary**: Stimulated by CRH and AVP, it releases **[Adrenocorticotropic hormone (ACTH)](https://www.proteinatlas.org/ENSG00000115138-POMC)** into the bloodstream.
+- **Anterior Pituitary Gland**: Stimulated by CRH and AVP, it releases **[Adrenocorticotropic hormone (ACTH)](https://www.proteinatlas.org/ENSG00000115138-POMC)** into the bloodstream.
 - **Other Controlling Factors**: Hormones like **[Ghrelin](https://www.proteinatlas.org/ENSG00000157017-GHRL)** (the "hunger hormone") can also stimulate the release of ACTH and subsequently increase Cortisol levels.
 - **Negative Feedback**: High levels of circulating Cortisol inhibit the release of both CRH from the hypothalamus and ACTH from the pituitary, ensuring hormonal balance.
 
