@@ -16,7 +16,7 @@
 
 ### Cortisol
 
-Cortisol, oft als „Stresshormon“ bezeichnet, ist ein Steroidhormon, das in den Nebennieren produziert wird. Es spielt eine entscheidende Rolle bei der Regulierung verschiedener Prozesse im Körper, einschließlich des Stoffwechsels, der Immunantwort und der Reaktion des Körpers auf Stress. Es ist das primäre Glucocorticoid beim Menschen.
+Cortisol, oft als „Stresshormon“ bezeichnet, ist ein Steroidhormon, das in der Nebennierenrinde produziert wird. Es spielt eine entscheidende Rolle bei der Regulierung verschiedener Prozesse im Körper, einschließlich des Stoffwechsels, der Immunantwort und der Reaktion des Körpers auf Stress. Es ist das primäre Glucocorticoid beim Menschen.
 
 #### Kalottenmodell (Spacefilling)
 | Vorderansicht | Rückansicht | Draufsicht |
@@ -62,9 +62,9 @@ Die Umwandlung von Cortison in Cortisol wird durch das Enzym **11β-Hydroxystero
 
 ![11β-HSD1 Enzym (PDB 1XU7) mit hervorgehobenem aktivem Zentrum (NDP und katalytische Reste)](output/images/enzyme_11bhsd1.png)
 
-## Medizinische Qualität und pharmakologische Eigenschaften
-Die medizinische Qualität dieser Moleküle wird durch ihre biologische Aktivität und therapeutische Wirksamkeit definiert.
-- **Cortisol (Hydrocortison)**: Als aktives Hormon stellt es den primären Vermittler von Glucocorticoid-Effekten dar. Seine „medizinische Qualität“ liegt in seiner sofortigen Verfügbarkeit für die Rezeptorbindung, was es für die akute Ersatztherapie und Notsituationen (z. B. Adrenalkrise) unerlässlich macht.
+## Pharmakologische Bedeutung und klinische Relevanz
+Die klinische Relevanz dieser Moleküle wird durch ihre biologische Aktivität und therapeutische Wirksamkeit definiert.
+- **Cortisol (Hydrocortison)**: Als aktives Hormon stellt es den primären Vermittler von Glucocorticoid-Effekten dar. Seine pharmakologische Bedeutung liegt in seiner sofortigen Verfügbarkeit für die Rezeptorbindung, was es für die akute Ersatztherapie und Notsituationen (z. B. Addison-Krise) unerlässlich macht.
 - **Cortison**: Seine Qualität als Medikament ist durch seine Rolle als Prodrug gekennzeichnet. Es erfordert eine metabolische Aktivierung, was zu einem langsameren Wirkungseintritt im Vergleich zur direkten Cortisol-Verabreichung führt. Dies macht es geeignet für chronische Erkrankungen, bei denen eine gleichmäßigere, weniger akute Wirkung erwünscht ist.
 
 ## Relative Potenz
@@ -74,9 +74,9 @@ Die medizinische Qualität dieser Moleküle wird durch ihre biologische Aktivit�
 ## Signalkette
 Der Signalweg von Cortisol (und aktiviertem Cortison) umfasst mehrere unterschiedliche Stadien:
 1. **Zelleintritt**: Da Cortisol lipophil ist, diffundiert es frei durch die Zellmembran in das Zytoplasma.
-2. **Rezeptorbindung**: Im Zytoplasma bindet Cortisol an den **Glucocorticoid-Rezeptor (GR)**, der normalerweise durch einen Chaperon-Komplex, bestehend aus **HSP90**, **HSP70** und **FKBP4**, in einem inaktiven Zustand gehalten wird.
-3. **Aktivierung**: Die Bindung löst die Dissoziation dieser Chaperon-Proteine aus, was zu einer Konformationsänderung und Dimerisierung des Rezeptors führt.
-4. **Nukleare Translokation**: Der aktivierte Cortisol-GR-Komplex transloziert in den Zellkern.
+2. **Rezeptorbindung**: Im Zytoplasma bindet Cortisol an den **Glucocorticoid-Rezeptor (GR)**, der normalerweise durch einen Chaperon-Komplex, bestehend aus **HSP90**, **HSP70** und **FKBP5** (das die Bindungsaffinität reduziert), in einem inaktiven Zustand gehalten wird.
+3. **Aktivierung**: Die Bindung löst die Dissoziation dieser Chaperon-Proteine aus. Dabei wird FKBP5 oft durch **FKBP4** ersetzt, was die Konformationsänderung unterstützt und die Bindungsaffinität erhöht.
+4. **Nukleare Translokation**: Der aktivierte Cortisol-GR-Komplex transloziert in den Zellkern, wobei FKBP4 die Interaktion mit dem Dynein-Transportprotein vermittelt.
 5. **Biologische Reaktion**:
     - **Transaktivierung**: Der Komplex bindet an spezifische DNA-Sequenzen, die als **Glucocorticoid-Response-Elements (GREs)** bezeichnet werden, und stimuliert die Transkription von entzündungshemmenden und metabolischen Genen.
     - **Transrepression**: Der Komplex kann auch die Aktivität anderer Transkriptionsfaktoren wie **NF-κB** oder **AP-1** stören und dadurch die Expression proinflammatorischer Gene unterdrücken.
@@ -88,7 +88,7 @@ Der Signalweg von Cortisol (und aktiviertem Cortison) umfasst mehrere unterschie
 - **Topische Anwendungen**: Häufig in Cremes gegen Hautentzündungen und Juckreiz.
 
 ### Cortison
-- **Gelenk- und Sehnenentzündungen**: Wird häufig durch lokale Injektion verabreicht (z. B. bei Schleimbeutelentzündung oder Arthritis).
+- **Gelenk- und Sehnenentzündungen**: Historisch als „Cortisonspritze“ bekannt, wobei heute meist synthetische Derivate wie Triamcinolon oder direkt wirksames Hydrocortison verwendet werden, da Cortison vor Ort erst aktiviert werden müsste.
 - **Systemische Entzündungen**: Wird oral bei verschiedenen Autoimmun- und Entzündungskrankheiten eingesetzt, bei denen ein Prodrug-Ansatz akzeptabel ist.
 
 ## Hauptunterschiede
@@ -96,8 +96,8 @@ Der Signalweg von Cortisol (und aktiviertem Cortison) umfasst mehrere unterschie
 |---------|---------------------------|-----------|
 | **Form** | Aktives Hormon | Inaktives Prodrug |
 | **Primärer Wirkort** | Systemisch / Gewebe | Muss in Leber/Gewebe aktiviert werden |
-| **Halbwertszeit** | ~1,5 - 2 Stunden | Etwas länger (aufgrund der Umwandlung) |
-| **Mineralocorticoid-Aktivität** | Hoch (vergleichsweise) | Niedrig |
+| **Halbwertszeit** | Plasma: ~1,5 - 2 h; Biologisch: 8 - 12 h | Plasma: ~0,5 - 1 h (schnelle Aktivierung) |
+| **Mineralocorticoid-Aktivität** | Hoch (potenziell), aber enzymatisch geschützt | Keine (inaktiv am Rezeptor) |
 
 
 ---
@@ -138,7 +138,7 @@ Die Leber ist ein zentraler Knotenpunkt für den Stoffwechsel dieser Steroide. S
 ### Hypothalamus und Hypophyse
 Diese Gehirnstrukturen regulieren den Cortisolspiegel über die **HPA-Achse** (Hypothalamus-Hypophysen-Nebennierenrinden-Achse) und dienen als primäres Kontrollzentrum für die Cortisolproduktion.
 - **Hypothalamus**: Setzt als Reaktion auf Stress oder zirkadiane Signale das **[Corticotropin-releasing Hormone (CRH)](https://www.proteinatlas.org/ENSG00000147571-CRH)** frei. Er kann auch **[Arginin-Vasopressin (AVP)](https://www.proteinatlas.org/ENSG00000101200-AVP)** freisetzen, das synergistisch mit CRH wirkt.
-- **Vorderlappen der Hypophyse**: Wird durch CRH und AVP stimuliert und gibt **[adrenocorticotropes Hormon (ACTH)](https://www.proteinatlas.org/ENSG00000115138-POMC)** in den Blutkreislauf ab.
+- **Hypophysenvorderlappen**: Wird durch CRH und AVP stimuliert und gibt **[adrenocorticotropes Hormon (ACTH)](https://www.proteinatlas.org/ENSG00000115138-POMC)** in den Blutkreislauf ab.
 - **Andere kontrollierende Faktoren**: Hormone wie **[Ghrelin](https://www.proteinatlas.org/ENSG00000157017-GHRL)** (das „Hungerhormon“) können ebenfalls die Freisetzung von ACTH stimulieren und anschließend den Cortisolspiegel erhöhen.
 - **Negative Rückkopplung**: Hohe Spiegel an zirkulierendem Cortisol hemmen die Freisetzung von sowohl CRH aus dem Hypothalamus als auch ACTH aus der Hypophyse und gewährleisten so das hormonelle Gleichgewicht.
 
