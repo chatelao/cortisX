@@ -1,14 +1,44 @@
 import os
 import asyncio
+import urllib.request
 from playwright.async_api import async_playwright
 
+def download_and_filter_pdb(pdb_id, excluded_chains):
+    """Downloads PDB data and filters out specified chains."""
+    url = f"https://files.rcsb.org/download/{pdb_id}.pdb"
+    try:
+        with urllib.request.urlopen(url) as response:
+            pdb_data = response.read().decode('utf-8')
+    except Exception as e:
+        print(f"Error downloading PDB {pdb_id}: {e}")
+        return None
+
+    filtered_lines = []
+    for line in pdb_data.splitlines():
+        if line.startswith(("ATOM", "HETATM")):
+            # Chain ID is at column 21 (index 21) in PDB format
+            chain_id = line[21].strip()
+            if chain_id in excluded_chains:
+                continue
+        filtered_lines.append(line)
+
+    return "\n".join(filtered_lines)
+
 async def render_enzyme(pdb_id, output_path):
-    """Generates a 3D spacefilling PNG image of an enzyme with highlighted active site."""
+    """Generates a 3D PNG image of the filtered enzyme."""
+
+    # Filter out chains A and B (Lower Half)
+    pdb_content = download_and_filter_pdb(pdb_id, ['A', 'B'])
+    if not pdb_content:
+        return False
+
+    # Escape backticks and other characters for JavaScript string
+    pdb_content_js = pdb_content.replace("\\", "\\\\").replace("`", "\\`").replace("$", "\\$")
 
     html_content = f"""
     <html>
     <head>
-        <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.2/3Dmol-min.js"></script>
     </head>
     <body>
         <div id="container" style="width: 800px; height: 600px; position: relative;"></div>
@@ -17,20 +47,21 @@ async def render_enzyme(pdb_id, output_path):
             let config = {{ backgroundColor: 'white' }};
             let viewer = $3Dmol.createViewer(element, config);
 
-            $3Dmol.download("pdb:{pdb_id}", viewer, {{}}, function() {{
-                // Set global style: cartoon for protein structure
-                viewer.setStyle({{}}, {{ cartoon: {{ color: 'lightgray' }} }});
+            let pdbData = `{pdb_content_js}`;
+            viewer.addModel(pdbData, "pdb");
 
-                // Highlight Ligand (NDP) as red spheres
-                viewer.addStyle({{ resn: 'NDP' }}, {{ sphere: {{ color: 'red' }} }});
+            // Style the remaining chains (C and D - Upper Half)
+            viewer.setStyle({{chain: ['C', 'D']}}, {{ cartoon: {{ color: 'lightgray' }} }});
 
-                // Highlight Catalytic Residues: Ser170, Tyr183, Lys187 as red spheres
-                viewer.addStyle({{ resi: [170, 183, 187], resn: ['SER', 'TYR', 'LYS'] }}, {{ sphere: {{ color: 'red' }} }});
+            // Highlight Ligand (NDP) as red spheres
+            viewer.addStyle({{ resn: 'NDP' }}, {{ sphere: {{ color: 'red' }} }});
 
-                viewer.zoomTo();
-                viewer.render();
-                window.renderComplete = true;
-            }});
+            // Highlight Catalytic Residues: Ser170, Tyr183, Lys187 as red spheres
+            viewer.addStyle({{ resi: [170, 183, 187], resn: ['SER', 'TYR', 'LYS'] }}, {{ sphere: {{ color: 'red' }} }});
+
+            viewer.zoomTo();
+            viewer.render();
+            window.renderComplete = true;
         </script>
     </body>
     </html>
@@ -43,12 +74,9 @@ async def render_enzyme(pdb_id, output_path):
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page()
-        # Set viewport to match container
         await page.set_viewport_size({"width": 800, "height": 600})
         await page.goto(f"file://{os.path.abspath(temp_html)}")
 
-        # Wait for the viewer to signal render completion
-        # We might need a longer timeout for protein download
         await page.wait_for_function("window.renderComplete === true", timeout=60000)
 
         await page.locator("#container").screenshot(path=output_path)
@@ -64,6 +92,6 @@ if __name__ == "__main__":
     os.makedirs(output_dir, exist_ok=True)
     path_enzyme = os.path.join(output_dir, "enzyme_11bhsd1.png")
 
-    print(f"Rendering enzyme 1XU7 to {path_enzyme}...")
+    print(f"Rendering filtered enzyme 1XU7 to {path_enzyme}...")
     asyncio.run(render_enzyme("1XU7", path_enzyme))
     print("Done.")
