@@ -54,28 +54,27 @@ async def render_enzyme(pdb_id, output_path, excluded_chains, style_chains):
             viewer.setStyle({{chain: {style_chains}, ss: 'h'}}, {{ cartoon: {{ color: 'yellow' }} }});
             // Sheets: Yellow with big arrows
             viewer.addStyle({{chain: {style_chains}, ss: 's'}}, {{ cartoon: {{ color: 'yellow', arrows: true, width: 1.2, thickness: 0.6 }} }});
-            // Coils: Thinner tube
-            viewer.addStyle({{chain: {style_chains}, ss: 'c'}}, {{ tube: {{ color: 'lightblue', radius: 0.1 }} }});
+            // Coils: Broader tube for better visibility
+            viewer.addStyle({{chain: {style_chains}, ss: 'c'}}, {{ tube: {{ color: 'lightblue', radius: 0.3 }} }});
 
             // 2. Draw all sidechains as sticks
             // General sidechains: Very faint light grey to avoid clutter
             viewer.addStyle({{chain: {style_chains}, atom: ['N', 'CA', 'C', 'O'], invert: true, hetatm: false}},
                             {{ stick: {{ radius: 0.05, color: '#eeeeee', opacity: 0.2 }} }});
 
-            // Atom-colored sticks for sidechains of helical residues (C: black, H: grey, O: lightred, S: yellow)
+            // "Purple inside helices": Helical sidechains in purple to contrast with yellow backbone
             viewer.addStyle({{chain: {style_chains}, ss: 'h', atom: ['N', 'CA', 'C', 'O'], invert: true, hetatm: false}},
-                            {{ stick: {{
-                                colorscheme: {{ prop: 'elem', map: {{ C: 'black', H: 'grey', O: '#FF8080', S: 'yellow', N: 'blue' }} }},
-                                radius: 0.15,
-                                opacity: 0.8
-                            }} }});
+                            {{ stick: {{ color: 'purple', radius: 0.15, opacity: 0.8 }} }});
 
             // 3. Sulfur atoms as small yellow balls
             viewer.addStyle({{ elem: 'S' }}, {{ sphere: {{ color: 'yellow', radius: 0.3 }} }});
 
-            // 4. Highlight Ligands (NDP, CPS, or others)
+            // 4. Massive Ball-and-Stick for Cortisol / Ligands
             viewer.addStyle({{ hetatm: true }},
-                            {{ stick: {{ color: '#98FB98', opacity: 0.6, radius: 0.25 }} }});
+                            {{
+                                stick: {{ color: '#98FB98', radius: 0.35 }},
+                                sphere: {{ color: '#98FB98', radius: 0.55 }}
+                            }});
 
             // 5. Catalytic Residues (Ser170, Tyr183, Lys187) as bright green sticks
             viewer.addStyle({{ resi: [170, 183, 187], resn: ['SER', 'TYR', 'LYS'] }},
