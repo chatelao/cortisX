@@ -10,13 +10,24 @@ import numpy as np
 from playwright.async_api import async_playwright
 from PIL import Image, ImageDraw, ImageFont
 
-def render_2d(smiles, output_path):
-    """Generates a 2D PNG image from a SMILES string."""
+def render_2d(smiles, output_path, highlight_atoms=None, highlight_color=(0, 1, 0)):
+    """Generates a 2D PNG image from a SMILES string with optional highlighting."""
     mol = Chem.MolFromSmiles(smiles)
-    if mol:
-        Draw.MolToFile(mol, output_path, size=(400, 400))
-        return True
-    return False
+    if not mol:
+        return False
+
+    d2d = MolDraw2DCairo(400, 400)
+    if highlight_atoms:
+        # highlightAtomColors expects a dictionary of index: color_tuple
+        # RDKit colors are 0-1 for RGB
+        d2d.DrawMolecule(mol, highlightAtoms=highlight_atoms,
+                        highlightAtomColors={i: highlight_color for i in highlight_atoms})
+    else:
+        d2d.DrawMolecule(mol)
+
+    d2d.FinishDrawing()
+    d2d.WriteDrawingText(output_path)
+    return True
 
 def render_3d(smiles, output_path):
     """Generates a pseudo-3D PNG image from a SMILES string using RDKit's 3D conformation."""
@@ -206,25 +217,73 @@ def render_balance(output_path):
     if not cortisol_smiles or not cortisone_smiles:
         return False
 
-    # Render individual 2D images
+    # Identify differentiating atoms at C11 position
+    # Cortisol: hydroxyl at C11. Cortisone: ketone at C11.
+    # We use SMARTS to find these specific environments.
+    # C11 is a ring carbon (R2) connected to a bridgehead and another ring carbon.
+    # SMARTS for Cortisol C11-OH: [C;R2]([OH])
+    # SMARTS for Cortisone C11=O: [C;R2](=O)
+
+    mol_cortisol = Chem.MolFromSmiles(cortisol_smiles)
+    mol_cortisone = Chem.MolFromSmiles(cortisone_smiles)
+
+    # We target the C-ring C11. C3=O is in A-ring (conjugated).
+    # C17-OH has a sidechain.
+    # C11 is not conjugated and has no sidechain.
+    smarts_cortisol = "[CH;R2]([OH])"
+    smarts_cortisone = "[C;R2](=O)"
+
+    match_cortisol = mol_cortisol.GetSubstructMatches(Chem.MolFromSmarts(smarts_cortisol))
+    match_cortisone = mol_cortisone.GetSubstructMatches(Chem.MolFromSmarts(smarts_cortisone))
+
+    # Filtering matches to ensure we get C11
+    # For Cortisol, we might get C11 and C17 if we are not careful.
+    # But C17 is [C;R1] (if D-ring is considered R1 and C-ring R2? No).
+    # Actually, let's use a more specific pattern that includes the bridgehead C9.
+    specific_cortisol = "[C;R2]1[C;R2][C;R2]2[C@H](O)C[C;R2]3..." # Too complex.
+
+    # Let's just find all matches and pick the one that isn't C17 or C3.
+    # C3 is conjugated. C17 has a side chain C(=O)CO.
+    highlight_cortisol = []
+    for match in match_cortisol:
+        c_idx = match[0]
+        # Check if it has a sidechain (C17 has 4 neighbors: C13, C16, O17, C20)
+        if len(mol_cortisol.GetAtomWithIdx(c_idx).GetNeighbors()) == 3: # C11 has 3 non-H neighbors: C9, C12, O11
+             highlight_cortisol.extend(match)
+             break
+
+    highlight_cortisone = []
+    for match in match_cortisone:
+        c_idx = match[0]
+        # C3 is connected to a double bond in the ring.
+        atom = mol_cortisone.GetAtomWithIdx(c_idx)
+        is_conjugated = False
+        for bond in atom.GetBonds():
+            if bond.GetIsConjugated():
+                is_conjugated = True
+        if not is_conjugated:
+            highlight_cortisone.extend(match)
+            break
+
+    # Render individual 2D images with highlights
     temp_cortisol = "temp_cortisol_2d.png"
     temp_cortisone = "temp_cortisone_2d.png"
-    render_2d(cortisol_smiles, temp_cortisol)
-    render_2d(cortisone_smiles, temp_cortisone)
+    render_2d(cortisol_smiles, temp_cortisol, highlight_atoms=highlight_cortisol)
+    render_2d(cortisone_smiles, temp_cortisone, highlight_atoms=highlight_cortisone)
 
     img_cortisol = Image.open(temp_cortisol)
     img_cortisone = Image.open(temp_cortisone)
 
-    # Create canvas
-    canvas_width = 1000
+    # Create canvas - increased width to avoid overlap
+    canvas_width = 1200
     canvas_height = 400
     canvas = Image.new('RGB', (canvas_width, canvas_height), 'white')
     draw = ImageDraw.Draw(canvas)
 
     # Positions
     y_offset = 50
-    canvas.paste(img_cortisone, (50, y_offset))
-    canvas.paste(img_cortisol, (550, y_offset))
+    canvas.paste(img_cortisone, (100, y_offset))
+    canvas.paste(img_cortisol, (700, y_offset))
 
     # Try to load a font that supports Greek characters
     font_paths = [
@@ -247,14 +306,14 @@ def render_balance(output_path):
         label_font = ImageFont.load_default()
 
     # Draw labels
-    draw.text((250, 350), "Cortisone", fill="black", font=label_font, anchor="mm")
-    draw.text((750, 350), "Cortisol", fill="black", font=label_font, anchor="mm")
+    draw.text((300, 350), "Cortisone", fill="black", font=label_font, anchor="mm")
+    draw.text((900, 350), "Cortisol", fill="black", font=label_font, anchor="mm")
 
-    # Draw arrows
+    # Draw arrows - adjusted for new canvas width and molecule positions
     arrow_y_top = 180
     arrow_y_bottom = 220
-    arrow_x_start = 420
-    arrow_x_end = 580
+    arrow_x_start = 520
+    arrow_x_end = 680
 
     # Top arrow (Right)
     draw.line([(arrow_x_start, arrow_y_top), (arrow_x_end, arrow_y_top)], fill="black", width=3)
