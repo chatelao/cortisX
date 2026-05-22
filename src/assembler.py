@@ -47,6 +47,17 @@ class Assembler:
             return False
         return True
 
+    def format_formula(self, formula, mode='md'):
+        """Formats a chemical formula with subscripts."""
+        if mode == 'md':
+            return re.sub(r'(\d+)', r'<sub>\1</sub>', formula)
+        elif mode == 'tex':
+            # Escape the formula first, then add textsubscript
+            # but wait, molecular formula doesn't usually have special latex chars
+            # except maybe if we already escaped it.
+            return re.sub(r'(\d+)', r'\\textsubscript{\1}', formula)
+        return formula
+
     def generate_markdown_table(self, lang='en'):
         """Generates a Markdown comparison table for the chemicals."""
         if not self.chemicals:
@@ -74,7 +85,10 @@ class Assembler:
         for label, key in properties:
             row = [label]
             for chem in self.chemicals.values():
-                row.append(str(chem.get(key, "N/A")))
+                val = str(chem.get(key, "N/A"))
+                if key == "molecular_formula":
+                    val = self.format_formula(val, mode='md')
+                row.append(val)
             table += "| " + " | ".join(row) + " |\n"
         return table
 
@@ -131,6 +145,8 @@ class Assembler:
                     new_lines.append('\\hline')
                     content = stripped.strip('|').split('|')
                     content = [self.escape_latex(c.strip()) for c in content]
+                    # HTML subscripts to LaTeX
+                    content = [re.sub(r'<sub>(.*?)</sub>', r'\\textsubscript{\1}', c) for c in content]
                     new_lines.append(' & '.join(content) + ' \\\\')
                     new_lines.append('\\hline')
                 elif '---' in line:
@@ -138,6 +154,8 @@ class Assembler:
                 else:
                     content = stripped.strip('|').split('|')
                     content = [self.escape_latex(c.strip()) for c in content]
+                    # HTML subscripts to LaTeX
+                    content = [re.sub(r'<sub>(.*?)</sub>', r'\\textsubscript{\1}', c) for c in content]
                     new_lines.append(' & '.join(content) + ' \\\\')
                     new_lines.append('\\hline')
             else:
@@ -169,6 +187,8 @@ class Assembler:
                     else:
                         # Apply LaTeX escaping and then Markdown formatting for regular lines
                         processed_line = self.escape_latex(processed_line)
+                        # HTML subscripts to LaTeX
+                        processed_line = re.sub(r'<sub>(.*?)</sub>', r'\\textsubscript{\1}', processed_line)
                         # Bold
                         processed_line = re.sub(r'\*\*(.*?)\*\*', r'\\textbf{\1}', processed_line)
                         # Italic
@@ -250,7 +270,12 @@ class Assembler:
             for label, key in properties:
                 row = [self.escape_latex(label)]
                 for chem in self.chemicals.values():
-                    row.append(self.escape_latex(str(chem.get(key, "N/A"))))
+                    val = str(chem.get(key, "N/A"))
+                    if key == "molecular_formula":
+                        val = self.format_formula(val, mode='tex')
+                    else:
+                        val = self.escape_latex(val)
+                    row.append(val)
                 tex_table += " & ".join(row) + " \\\\\n\\hline\n"
             tex_table += "\\end{tabularx}\n\\end{center}"
 

@@ -7,7 +7,7 @@
 | Eigenschaft | Cortisol | Cortisone |
 | --- | --- | --- |
 | PubChem CID | 5754 | 222786 |
-| Summenformel | C21H30O5 | C21H28O5 |
+| Summenformel | C<sub>21</sub>H<sub>30</sub>O<sub>5</sub> | C<sub>21</sub>H<sub>28</sub>O<sub>5</sub> |
 | Molekulargewicht (g/mol) | 362.5 | 360.4 |
 | SMILES | C[C@]12CCC(=O)C=C1CC[C@@H]3[C@@H]2[C@H](C[C@]4([C@H]3CC[C@@]4(C(=O)CO)O)C)O | C[C@]12CCC(=O)C=C1CC[C@@H]3[C@@H]2C(=O)C[C@]4([C@H]3CC[C@@]4(C(=O)CO)O)C |
 
@@ -188,9 +188,9 @@ Die folgende Tabelle listet gängige Medikamente auf, die in verschiedenen thera
 
 | Medikament | Summenformel | Vorteile | Nachteile |
 |------------|--------------|----------|-----------|
-| Prednison | C21H26O5 | Kostengünstige, etablierte systemische Behandlung | Prodrug; erfordert metabolische Aktivierung in der Leber |
-| Prednisolon | C21H28O5 | Biologisch aktive Form; geeignet für Patienten mit Leberfunktionsstörungen | Ähnliche systemische Nebenwirkungen wie andere Glucocorticoide |
-| Dexamethason | C22H29FO5 | Sehr hohe Potenz; lang wirkend; minimale mineralocorticoide (salzhaltende) Aktivität | Starke Unterdrückung der HPA-Achse |
-| Methylprednisolon | C22H30O5 | Geringere salzhaltende Wirkung als Cortisol; vielseitige Verabreichungswege | Risiko typischer corticosteroidbedingter Nebenwirkungen |
-| Fludrocortison | C21H29FO5 | Extrem potente mineralocorticoide Aktivität; unerlässlich bei Nebenniereninsuffizienz | Erhebliches Risiko für Bluthochdruck und Ödeme, wenn nicht sorgfältig überwacht |
-| Betamethason | C22H29FO5 | Hochpotent; lang wirkend; wird bei verschiedenen entzündlichen Zuständen eingesetzt | Starke Unterdrückung der HPA-Achse |
+| Prednison | C<sub>21</sub>H<sub>26</sub>O<sub>5</sub> | Kostengünstige, etablierte systemische Behandlung | Prodrug; erfordert metabolische Aktivierung in der Leber |
+| Prednisolon | C<sub>21</sub>H<sub>28</sub>O<sub>5</sub> | Biologisch aktive Form; geeignet für Patienten mit Leberfunktionsstörungen | Ähnliche systemische Nebenwirkungen wie andere Glucocorticoide |
+| Dexamethason | C<sub>22</sub>H<sub>29</sub>FO<sub>5</sub> | Sehr hohe Potenz; lang wirkend; minimale mineralocorticoide (salzhaltende) Aktivität | Starke Unterdrückung der HPA-Achse |
+| Methylprednisolon | C<sub>22</sub>H<sub>30</sub>O<sub>5</sub> | Geringere salzhaltende Wirkung als Cortisol; vielseitige Verabreichungswege | Risiko typischer corticosteroidbedingter Nebenwirkungen |
+| Fludrocortison | C<sub>21</sub>H<sub>29</sub>FO<sub>5</sub> | Extrem potente mineralocorticoide Aktivität; unerlässlich bei Nebenniereninsuffizienz | Erhebliches Risiko für Bluthochdruck und Ödeme, wenn nicht sorgfältig überwacht |
+| Betamethason | C<sub>22</sub>H<sub>29</sub>FO<sub>5</sub> | Hochpotent; lang wirkend; wird bei verschiedenen entzündlichen Zuständen eingesetzt | Starke Unterdrückung der HPA-Achse |
