@@ -39,34 +39,6 @@ def render_2d(smiles, output_path, highlight_atoms=None, highlight_color=(0, 1, 
     d2d.WriteDrawingText(output_path)
     return True
 
-def render_3d(smiles, output_path):
-    """Generates a pseudo-3D PNG image from a SMILES string using RDKit's 3D conformation."""
-    mol = Chem.MolFromSmiles(smiles)
-    if not mol:
-        return False
-
-    # Add hydrogens and generate 3D conformation
-    mol = Chem.AddHs(mol)
-    params = AllChem.ETKDGv3()
-    params.randomSeed = 42
-    if AllChem.EmbedMolecule(mol, params) == -1:
-        return False
-
-    # Rotate 180 degrees around Y-axis to align with 2D model
-    # (A-ring on the right, D-ring on the left)
-    matrix = np.eye(4)
-    # Cos(180) = -1, Sin(180) = 0
-    matrix[0, 0] = -1
-    matrix[2, 2] = -1
-    rdMolTransforms.TransformConformer(mol.GetConformer(0), matrix)
-
-    # Render the 3D conformation to a 2D PNG (pseudo-3D)
-    d2d = MolDraw2DCairo(400, 400)
-    d2d.DrawMolecule(mol)
-    d2d.FinishDrawing()
-    d2d.WriteDrawingText(output_path)
-    return True
-
 async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20):
     """Generates a 3D spacefilling PNG image from a SMILES string using 3Dmol.js and Playwright."""
     mol = Chem.MolFromSmiles(smiles)
@@ -374,13 +346,6 @@ async def generate_renders():
             print(f"Generated 2D render for {name} at {path_2d}")
         else:
             print(f"Failed to generate 2D render for {name}")
-
-        # 3D Rendering (Pseudo-3D)
-        path_3d = os.path.join(output_dir, f"{name.lower()}_3d.png")
-        if render_3d(smiles, path_3d):
-            print(f"Generated 3D render for {name} at {path_3d}")
-        else:
-            print(f"Failed to generate 3D render for {name}")
 
         # 3D Spacefilling Rendering
         views = [

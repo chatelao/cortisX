@@ -20,10 +20,8 @@
 #### 3D-Kalotten-Animation
 ![Cortisol Animation](output/images/cortisol_animation.gif)
 
-#### 2D- und Pseudo-3D-Stäbchenmodelle
-| 2D-Modell | Pseudo-3D-Stäbchenmodell |
-| :---: | :---: |
-| ![Cortisol 2D](output/images/cortisol_2d.png) | ![Cortisol 3D](output/images/cortisol_3d.png) |
+#### 2D-Modell
+![Cortisol 2D](output/images/cortisol_2d.png)
 
 ### Cortison
 
@@ -37,10 +35,8 @@
 #### 3D-Kalotten-Animation
 ![Cortison Animation](output/images/cortisone_animation.gif)
 
-#### 2D- und Pseudo-3D-Stäbchenmodelle
-| 2D-Modell | Pseudo-3D-Stäbchenmodell |
-| :---: | :---: |
-| ![Cortison 2D](output/images/cortisone_2d.png) | ![Cortison 3D](output/images/cortisone_3d.png) |
+#### 2D-Modell
+![Cortison 2D](output/images/cortisone_2d.png)
 
 ---
 

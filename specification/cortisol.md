@@ -12,5 +12,3 @@ Cortisol, often called the "stress hormone," is a steroid hormone produced by th
 ### Spacefilling Model
 ![Cortisol Spacefilling](../output/images/cortisol_spacefilling.png)
 
-### Pseudo-3D Stick Model
-![Cortisol 3D](../output/images/cortisol_3d.png)
