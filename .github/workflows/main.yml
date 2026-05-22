@@ -61,6 +61,8 @@ jobs:
       run: |
         pdflatex -interaction=nonstopmode report.tex
         pdflatex -interaction=nonstopmode report.tex
+        pdflatex -interaction=nonstopmode bericht.tex
+        pdflatex -interaction=nonstopmode bericht.tex
 
     - name: Create Release
       if: startsWith(github.ref, 'refs/tags/v')
@@ -69,5 +71,7 @@ jobs:
         files: |
           report.pdf
           REPORT.md
+          bericht.pdf
+          BERICHT.md
           output/images/cortisol_animation.gif
           output/images/cortisone_animation.gif
