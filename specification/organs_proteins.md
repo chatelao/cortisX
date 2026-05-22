@@ -10,9 +10,9 @@ The liver is a major hub for the metabolism of these steroids. It is the primary
 
 ### Hypothalamus and Pituitary Gland
 These brain structures regulate Cortisol levels through the **HPA axis** (Hypothalamic-Pituitary-Adrenal axis), serving as the primary control center for Cortisol production.
-- **Hypothalamus**: Releases **Corticotropin-releasing hormone (CRH)** in response to stress or circadian signals. It may also release **Arginine Vasopressin (AVP)**, which acts synergistically with CRH.
-- **Anterior Pituitary**: Stimulated by CRH and AVP, it releases **Adrenocorticotropic hormone (ACTH)** into the bloodstream.
-- **Other Controlling Factors**: Hormones like **Ghrelin** (the "hunger hormone") can also stimulate the release of ACTH and subsequently increase Cortisol levels.
+- **Hypothalamus**: Releases **[Corticotropin-releasing hormone (CRH)](https://www.proteinatlas.org/ENSG00000147571-CRH)** in response to stress or circadian signals. It may also release **[Arginine Vasopressin (AVP)](https://www.proteinatlas.org/ENSG00000101200-AVP)**, which acts synergistically with CRH.
+- **Anterior Pituitary**: Stimulated by CRH and AVP, it releases **[Adrenocorticotropic hormone (ACTH)](https://www.proteinatlas.org/ENSG00000115138-POMC)** into the bloodstream.
+- **Other Controlling Factors**: Hormones like **[Ghrelin](https://www.proteinatlas.org/ENSG00000157017-GHRL)** (the "hunger hormone") can also stimulate the release of ACTH and subsequently increase Cortisol levels.
 - **Negative Feedback**: High levels of circulating Cortisol inhibit the release of both CRH from the hypothalamus and ACTH from the pituitary, ensuring hormonal balance.
 
 ### Kidneys
