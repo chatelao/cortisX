@@ -186,7 +186,11 @@ class Assembler:
                     if image_match:
                         alt_text = self.escape_latex(image_match.group(1))
                         image_path = image_match.group(2)
-                        processed_line = f"\\begin{{figure}}[h]\n\\centering\n\\includegraphics[width=0.6\\textwidth]{{{image_path}}}\n\\caption{{{alt_text}}}\n\\end{{figure}}"
+                        if image_path.lower().endswith('.gif'):
+                            # LaTeX does not support GIFs, skip them and add a note
+                            processed_line = f"\\begin{{center}} \\textit{{(Animation omitted in PDF - see Markdown: {alt_text})}} \\end{{center}}"
+                        else:
+                            processed_line = f"\\begin{{figure}}[h]\n\\centering\n\\includegraphics[width=0.6\\textwidth]{{{image_path}}}\n\\caption{{{alt_text}}}\n\\end{{figure}}"
                     else:
                         # Extract links to avoid escaping them
                         links = []
