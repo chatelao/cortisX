@@ -176,6 +176,12 @@ Cortisol is a product of the steroid biosynthetic pathway in the adrenal cortex.
 - **Albumin**: A non-specific transport protein that binds a smaller fraction of circulating Cortisol.
 
 
+### 11β-HSD1 Enzyme Visualization (Dimer of PDB: 1XU7)
+![11β-HSD1 Enzyme](output/images/enzyme_11bhsd1.png)
+
+#### 3D Enzyme Animation (Rotating Dimer)
+![11β-HSD1 Enzyme Animation](output/images/enzyme_11bhsd1_animation.gif)
+
 ---
 
 # Appendix: Cortisol Substitution Medications

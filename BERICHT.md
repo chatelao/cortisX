@@ -176,6 +176,12 @@ Cortisol ist ein Produkt des Steroid-Biosynthesewegs in der Nebennierenrinde. Se
 - **Albumin**: Ein unspezifisches Transportprotein, das einen kleineren Teil des zirkulierenden Cortisols bindet.
 
 
+### 11β-HSD1 Enzymvisualisierung (Dimer von PDB: 1XU7)
+![11β-HSD1 Enzym](output/images/enzyme_11bhsd1.png)
+
+#### 3D-Enzym-Animation (rotierendes Dimer)
+![11β-HSD1 Enzym Animation](output/images/enzyme_11bhsd1_animation.gif)
+
 ---
 
 # Anhang: Cortisol-Ersatzmedikamente
