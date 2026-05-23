@@ -54,6 +54,7 @@ jobs:
       env:
         PYTHONPATH: .
       run: |
+        python3 src/render_protein.py
         python3 src/renderer.py
         python3 src/assembler.py
 
