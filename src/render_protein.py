@@ -56,7 +56,14 @@ def get_3dmol_style_js():
         viewer.addStyle({ resi: [170, 183, 187] },
                        { stick: { color: '#E74C3C', radius: 0.25 } });
 
+        // Transparent green active regions
+        viewer.addStyle({ resi: [170, 183, 187] },
+                        { sphere: { color: 'green', opacity: 0.4 } });
+        viewer.addStyle({ resn: ['NDP', 'BVT'] },
+                        { sphere: { color: 'green', opacity: 0.4 } });
+
         viewer.zoomTo();
+        viewer.zoom(1.2);
     """
 
 async def render_enzyme(pdb_id, output_path):

@@ -39,7 +39,7 @@ def render_2d(smiles, output_path, highlight_atoms=None, highlight_color=(0, 1, 
     d2d.WriteDrawingText(output_path)
     return True
 
-async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20):
+async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20, highlight_atoms=None):
     """Generates a 3D spacefilling PNG image from a SMILES string using 3Dmol.js and Playwright."""
     mol = Chem.MolFromSmiles(smiles)
     if not mol:
@@ -57,7 +57,7 @@ async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20):
     html_content = f"""
     <html>
     <head>
-        <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.2/3Dmol-min.js"></script>
     </head>
     <body>
         <div id="container" style="width: 400px; height: 400px; position: relative;"></div>
@@ -67,10 +67,16 @@ async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20):
             let viewer = $3Dmol.createViewer(element, config);
             viewer.addModel(`{mol_block}`, "mol");
             viewer.setStyle({{ sphere: {{}} }});
+
+            // Apply highlight as a slightly larger transparent green shell
+            if ({'true' if highlight_atoms else 'false'}) {{
+                viewer.addStyle({{index: {highlight_atoms}}}, {{sphere: {{color: 'green', opacity: 0.5, radius: 2.0}}}});
+            }}
+
             viewer.zoomTo();
             viewer.rotate({x_rot}, 'x');
             viewer.rotate({y_rot}, 'y');
-            viewer.zoom(0.8);
+            viewer.zoom(1.2);
             viewer.render();
             // Signal that rendering is complete
             window.renderComplete = true;
@@ -97,7 +103,7 @@ async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20):
 
     return True
 
-async def render_3d_animation(smiles, output_path, num_frames=20):
+async def render_3d_animation(smiles, output_path, num_frames=20, highlight_atoms=None):
     """Generates an animated 3D spacefilling GIF from a SMILES string using 3Dmol.js and Playwright."""
     mol = Chem.MolFromSmiles(smiles)
     if not mol:
@@ -115,7 +121,7 @@ async def render_3d_animation(smiles, output_path, num_frames=20):
     html_content = f"""
     <html>
     <head>
-        <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.2/3Dmol-min.js"></script>
     </head>
     <body>
         <div id="container" style="width: 400px; height: 400px; position: relative;"></div>
@@ -125,9 +131,15 @@ async def render_3d_animation(smiles, output_path, num_frames=20):
             let viewer = $3Dmol.createViewer(element, config);
             viewer.addModel(`{mol_block}`, "mol");
             viewer.setStyle({{ sphere: {{}} }});
+
+            // Apply highlight as a slightly larger transparent green shell
+            if ({'true' if highlight_atoms else 'false'}) {{
+                viewer.addStyle({{index: {highlight_atoms}}}, {{sphere: {{color: 'green', opacity: 0.5, radius: 2.0}}}});
+            }}
+
             viewer.zoomTo();
             viewer.rotate(20, 'x');
-            viewer.zoom(0.8);
+            viewer.zoom(1.2);
             viewer.render();
 
             window.rotateAndRender = function(angle) {{
@@ -339,10 +351,28 @@ async def generate_renders():
 
     for name, info in data.items():
         smiles = info['smiles']
+        mol = Chem.MolFromSmiles(smiles)
+
+        # Identify highlight atoms for 3D (C11 position)
+        highlight_atoms = []
+        if name == "Cortisol":
+            match = mol.GetSubstructMatches(Chem.MolFromSmarts("[CH;R]([OH])"))
+            for m in match:
+                if len(mol.GetAtomWithIdx(m[0]).GetNeighbors()) == 3:
+                    highlight_atoms = list(m)
+                    break
+        elif name == "Cortisone":
+            match = mol.GetSubstructMatches(Chem.MolFromSmarts("[C;R](=O)"))
+            for m in match:
+                atom = mol.GetAtomWithIdx(m[0])
+                is_conjugated = any(b.GetIsConjugated() for b in atom.GetBonds())
+                if not is_conjugated:
+                    highlight_atoms = list(m)
+                    break
 
         # 2D Rendering
         path_2d = os.path.join(output_dir, f"{name.lower()}_2d.png")
-        if render_2d(smiles, path_2d):
+        if render_2d(smiles, path_2d, highlight_atoms=highlight_atoms):
             print(f"Generated 2D render for {name} at {path_2d}")
         else:
             print(f"Failed to generate 2D render for {name}")
@@ -355,14 +385,14 @@ async def generate_renders():
         ]
         for suffix, x_rot, y_rot in views:
             path_sf = os.path.join(output_dir, f"{name.lower()}_spacefilling{suffix}.png")
-            if await render_3d_spacefilling(smiles, path_sf, x_rot, y_rot):
+            if await render_3d_spacefilling(smiles, path_sf, x_rot, y_rot, highlight_atoms=highlight_atoms):
                 print(f"Generated 3D spacefilling render ({suffix or 'front'}) for {name} at {path_sf}")
             else:
                 print(f"Failed to generate 3D spacefilling render ({suffix or 'front'}) for {name}")
 
         # 3D Animation Rendering
         path_anim = os.path.join(output_dir, f"{name.lower()}_animation.gif")
-        if await render_3d_animation(smiles, path_anim):
+        if await render_3d_animation(smiles, path_anim, highlight_atoms=highlight_atoms):
             print(f"Generated 3D animation for {name} at {path_anim}")
         else:
             print(f"Failed to generate 3D animation for {name}")
