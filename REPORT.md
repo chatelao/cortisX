@@ -74,12 +74,12 @@ The clinical relevance of these molecules is defined by their biological activit
 ## Signaling Chain
 The signaling pathway of Cortisol (and activated Cortisone) involves several distinct stages:
 1. **Cellular Entry**: Being lipophilic, Cortisol diffuses freely across the cell membrane into the cytoplasm.
-2. **Receptor Binding**: In the cytoplasm, Cortisol binds to the **Glucocorticoid Receptor (GR)**, which is typically held in an inactive state by a chaperone complex including **HSP90**, **HSP70**, and **FKBP5** (which reduces binding affinity).
-3. **Activation**: Binding triggers the dissociation of these chaperone proteins. During this process, FKBP5 is often replaced by **FKBP4**, which supports the conformational change and increases binding affinity.
-4. **Nuclear Translocation**: The activated Cortisol-GR complex translocates into the nucleus, with FKBP4 mediating the interaction with the dynein transport protein.
+2. **Receptor Binding**: In the cytoplasm, Cortisol binds to the **[Glucocorticoid Receptor (NR3C1 / GR)](https://www.proteinatlas.org/ENSG00000113580-NR3C1)**, which is typically held in an inactive state by a chaperone complex including **[HSP90 (HSP90AA1)](https://www.proteinatlas.org/ENSG00000080824-HSP90AA1)**, **[HSP70 (HSPA1A)](https://www.proteinatlas.org/ENSG00000204389-HSPA1A)**, and **[FKBP5](https://www.proteinatlas.org/ENSG00000096060-FKBP5)** (which reduces binding affinity).
+3. **Activation**: Binding triggers the dissociation of these chaperone proteins. During this process, FKBP5 is often replaced by **[FKBP4](https://www.proteinatlas.org/ENSG00000004478-FKBP4)**, which supports the conformational change and increases binding affinity.
+4. **Nuclear Translocation**: The activated Cortisol-GR complex translocates into the nucleus, with FKBP4 mediating the interaction with the **[dynein transport protein (DYNC1H1)](https://www.proteinatlas.org/ENSG00000197102-DYNC1H1)**.
 5. **Biological Response**:
     - **Transactivation**: The complex binds to specific DNA sequences called **Glucocorticoid Response Elements (GREs)**, stimulating the transcription of anti-inflammatory and metabolic genes.
-    - **Transrepression**: The complex can also interfere with the activity of other transcription factors, such as **NF-κB** or **AP-1**, thereby repressing the expression of pro-inflammatory genes.
+    - **Transrepression**: The complex can also interfere with the activity of other transcription factors, such as **[NF-κB (NFKB1)](https://www.proteinatlas.org/ENSG00000109320-NFKB1)** or **[AP-1 (JUN)](https://www.proteinatlas.org/ENSG00000177606-JUN)**, thereby repressing the expression of pro-inflammatory genes.
 
 ## Therapeutic Use Cases
 ### Cortisol (Hydrocortisone)

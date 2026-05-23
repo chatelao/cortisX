@@ -26,12 +26,12 @@ Die klinische Relevanz dieser Moleküle wird durch ihre biologische Aktivität u
 ## Signalkette
 Der Signalweg von Cortisol (und aktiviertem Cortison) umfasst mehrere unterschiedliche Stadien:
 1. **Zelleintritt**: Da Cortisol lipophil ist, diffundiert es frei durch die Zellmembran in das Zytoplasma.
-2. **Rezeptorbindung**: Im Zytoplasma bindet Cortisol an den **Glucocorticoid-Rezeptor (GR)**, der normalerweise durch einen Chaperon-Komplex, bestehend aus **HSP90**, **HSP70** und **FKBP5** (das die Bindungsaffinität reduziert), in einem inaktiven Zustand gehalten wird.
-3. **Aktivierung**: Die Bindung löst die Dissoziation dieser Chaperon-Proteine aus. Dabei wird FKBP5 oft durch **FKBP4** ersetzt, was die Konformationsänderung unterstützt und die Bindungsaffinität erhöht.
-4. **Nukleare Translokation**: Der aktivierte Cortisol-GR-Komplex transloziert in den Zellkern, wobei FKBP4 die Interaktion mit dem Dynein-Transportprotein vermittelt.
+2. **Rezeptorbindung**: Im Zytoplasma bindet Cortisol an den **[Glucocorticoid-Rezeptor (NR3C1 / GR)](https://www.proteinatlas.org/ENSG00000113580-NR3C1)**, der normalerweise durch einen Chaperon-Komplex, bestehend aus **[HSP90 (HSP90AA1)](https://www.proteinatlas.org/ENSG00000080824-HSP90AA1)**, **[HSP70 (HSPA1A)](https://www.proteinatlas.org/ENSG00000204389-HSPA1A)** und **[FKBP5](https://www.proteinatlas.org/ENSG00000096060-FKBP5)** (das die Bindungsaffinität reduziert), in einem inaktiven Zustand gehalten wird.
+3. **Aktivierung**: Die Bindung löst die Dissoziation dieser Chaperon-Proteine aus. Dabei wird FKBP5 oft durch **[FKBP4](https://www.proteinatlas.org/ENSG00000004478-FKBP4)** ersetzt, was die Konformationsänderung unterstützt und die Bindungsaffinität erhöht.
+4. **Nukleare Translokation**: Der aktivierte Cortisol-GR-Komplex transloziert in den Zellkern, wobei FKBP4 die Interaktion mit dem **[Dynein-Transportprotein (DYNC1H1)](https://www.proteinatlas.org/ENSG00000197102-DYNC1H1)** vermittelt.
 5. **Biologische Reaktion**:
     - **Transaktivierung**: Der Komplex bindet an spezifische DNA-Sequenzen, die als **Glucocorticoid-Response-Elements (GREs)** bezeichnet werden, und stimuliert die Transkription von entzündungshemmenden und metabolischen Genen.
-    - **Transrepression**: Der Komplex kann auch die Aktivität anderer Transkriptionsfaktoren wie **NF-κB** oder **AP-1** stören und dadurch die Expression proinflammatorischer Gene unterdrücken.
+    - **Transrepression**: Der Komplex kann auch die Aktivität anderer Transkriptionsfaktoren wie **[NF-κB (NFKB1)](https://www.proteinatlas.org/ENSG00000109320-NFKB1)** oder **[AP-1 (JUN)](https://www.proteinatlas.org/ENSG00000177606-JUN)** stören und dadurch die Expression proinflammatorischer Gene unterdrücken.
 
 ## Therapeutische Anwendungsfälle
 ### Cortisol (Hydrocortison)
