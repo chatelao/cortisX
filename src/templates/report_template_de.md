@@ -53,6 +53,10 @@
 ### 11β-HSD1 Enzymvisualisierung (Dimer von PDB: 1XU7)
 ![11β-HSD1 Enzym](output/images/enzyme_11bhsd1.png)
 
+#### Aktives Zentrum (Detailansicht)
+Hier ist das aktive Zentrum der 11β-HSD1 dargestellt. Man sieht den Liganden (BVT, als Analogon für Cortisol/Cortison), den NDP-Cofaktor sowie die katalytische Triade (Ser170, Tyr183, Lys187).
+![11β-HSD1 Aktives Zentrum](output/images/enzyme_11bhsd1_active_site.png)
+
 #### 3D-Enzym-Animation (rotierendes Dimer)
 ![11β-HSD1 Enzym Animation](output/images/enzyme_11bhsd1_animation.gif)
 
