@@ -50,10 +50,7 @@
 
 {{ORGANS_CONTENT}}
 
-### 11β-HSD1 Enzyme Visualization (Dimer of PDB: 1XU7)
-![11β-HSD1 Enzyme](output/images/enzyme_11bhsd1.png)
-
-#### 3D Enzyme Animation (Rotating Dimer)
+### 11β-HSD1 Enzyme Animation (Rotating Dimer)
 ![11β-HSD1 Enzyme Animation](output/images/enzyme_11bhsd1_animation.gif)
 
 ---

@@ -42,13 +42,13 @@ def get_3dmol_style_js():
         viewer.setStyle({ss: 's'}, styleSheet);
         viewer.setStyle({ss: 'c'}, styleCoil);
 
-        // Highlight the cofactor (NDP)
-        viewer.addStyle({ resn: 'NDP' },
+        // Highlight the cofactor (NDP or NAP)
+        viewer.addStyle({ resn: ['NDP', 'NAP'] },
                        { stick: { colorscheme: 'greenCarbon', radius: 0.25 },
                          sphere: { colorscheme: 'greenCarbon', radius: 0.4, opacity: 0.8 } });
 
-        // Highlight the steroid-like ligand (BVT) to show interaction
-        viewer.addStyle({ resn: 'BVT' },
+        // Highlight the steroid-like ligand (BVT, 3OQ or CPS)
+        viewer.addStyle({ resn: ['BVT', '3OQ', 'CPS'] },
                        { stick: { colorscheme: 'magentaCarbon', radius: 0.3 },
                          sphere: { colorscheme: 'magentaCarbon', radius: 0.5 } });
 
@@ -103,6 +103,89 @@ async def render_enzyme(pdb_id, output_path):
         await page.goto(f"file://{os.path.abspath(temp_html)}")
 
         await page.wait_for_function("window.renderComplete === true", timeout=60000)
+        # Ensure a small delay for rendering to finish internally
+        await asyncio.sleep(2)
+        await page.locator("#container").screenshot(path=output_path)
+        await browser.close()
+
+    if os.path.exists(temp_html):
+        os.remove(temp_html)
+
+    return True
+
+async def render_active_site(pdb_id, output_path):
+    """Generates a close-up 3D PNG image of the 11b-HSD1 active site."""
+    # Use 1XU7 as requested, highlight NDP, CPS and catalytic residues
+    # CPS (CHAPS) acts as a steroid-like proxy in 1XU7
+    actual_pdb = "1XU7"
+
+    # Using only Chain A for the close-up to avoid clutter
+    pdb_content = download_and_filter_pdb(actual_pdb, excluded_chains=['B', 'C', 'D'])
+    if not pdb_content:
+        return False
+
+    pdb_content_js = pdb_content.replace("\\", "\\\\").replace("`", "\\`").replace("$", "\\$")
+
+    html_content = f"""
+    <html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.2/3Dmol-min.js"></script>
+    </head>
+    <body>
+        <div id="container" style="width: 1200px; height: 900px; position: relative;"></div>
+        <script>
+            let element = document.getElementById('container');
+            let config = {{ backgroundColor: 'white' }};
+            let viewer = $3Dmol.createViewer(element, config);
+
+            let pdbData = `{pdb_content_js}`;
+            viewer.addModel(pdbData, "pdb");
+
+            // Style the protein as semi-transparent cartoon
+            viewer.setStyle({{}}, {{ cartoon: {{ color: 'lightgray', opacity: 0.3 }} }});
+
+            // Highlight the cofactor (NDP)
+            viewer.addStyle({{ resn: 'NDP' }},
+                           {{ stick: {{ colorscheme: 'greenCarbon', radius: 0.2 }},
+                             sphere: {{ colorscheme: 'greenCarbon', radius: 0.4, opacity: 0.6 }} }});
+            viewer.addLabel("NADPH (Cofactor)", {{ font: 'sans-serif', fontSize: 18, fontColor: 'darkgreen', backgroundColor: 'white', backgroundOpacity: 0.7 }}, {{ resn: 'NDP' }});
+
+            // Highlight the steroid-like ligand (CPS/CHAPS)
+            viewer.addStyle({{ resn: 'CPS' }},
+                           {{ stick: {{ colorscheme: 'magentaCarbon', radius: 0.25 }},
+                             sphere: {{ colorscheme: 'magentaCarbon', radius: 0.5 }} }});
+            viewer.addLabel("Steroid Site (CPS)", {{ font: 'sans-serif', fontSize: 20, fontColor: 'darkmagenta', backgroundColor: 'white', backgroundOpacity: 0.8 }}, {{ resn: 'CPS' }});
+
+            // Highlight catalytic triad (Ser170, Tyr183, Lys187)
+            viewer.addStyle({{ resi: [170, 183, 187] }},
+                           {{ stick: {{ color: '#E74C3C', radius: 0.2 }} }});
+
+            viewer.addLabel("Ser170", {{ fontSize: 14, fontColor: '#E74C3C' }}, {{ resi: 170, atom: 'OG' }});
+            viewer.addLabel("Tyr183", {{ fontSize: 14, fontColor: '#E74C3C' }}, {{ resi: 183, atom: 'OH' }});
+            viewer.addLabel("Lys187", {{ fontSize: 14, fontColor: '#E74C3C' }}, {{ resi: 187, atom: 'NZ' }});
+
+            // Zoom into the ligand
+            viewer.zoomTo({{ resn: 'CPS' }});
+            viewer.render();
+            window.renderComplete = true;
+        </script>
+    </body>
+    </html>
+    """
+
+    temp_html = "temp_active_site.html"
+    with open(temp_html, "w") as f:
+        f.write(html_content)
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        page = await browser.new_page()
+        await page.set_viewport_size({"width": 1200, "height": 900})
+        await page.goto(f"file://{os.path.abspath(temp_html)}", timeout=60000)
+
+        await page.wait_for_function("window.renderComplete === true", timeout=60000)
+        # Ensure a small delay for rendering to finish internally
+        await asyncio.sleep(2)
         await page.locator("#container").screenshot(path=output_path)
         await browser.close()
 
@@ -159,13 +242,17 @@ async def render_enzyme_animation(pdb_id, output_path, num_frames=24):
         browser = await p.chromium.launch()
         page = await browser.new_page()
         await page.set_viewport_size({"width": 800, "height": 600})
-        await page.goto(f"file://{os.path.abspath(temp_html)}")
-        await page.wait_for_function("window.renderComplete === true")
+        await page.goto(f"file://{os.path.abspath(temp_html)}", timeout=60000)
+        await page.wait_for_function("window.renderComplete === true", timeout=60000)
+        # Delay for initial rendering
+        await asyncio.sleep(2)
 
         angle_step = 360 / num_frames
         for i in range(num_frames):
             frame_path = f"temp_protein_frame_{i}.png"
             await page.evaluate(f"window.rotateAndRender({angle_step})")
+            # Brief delay after rotation for rendering
+            await asyncio.sleep(0.5)
             await page.locator("#container").screenshot(path=frame_path)
             frames.append(Image.open(frame_path))
 
@@ -198,10 +285,14 @@ if __name__ == "__main__":
     os.makedirs(output_dir, exist_ok=True)
 
     path_enzyme = os.path.join(output_dir, "enzyme_11bhsd1.png")
+    path_active = os.path.join(output_dir, "enzyme_11bhsd1_active_site.png")
     path_anim = os.path.join(output_dir, "enzyme_11bhsd1_animation.gif")
 
     print(f"Rendering refined enzyme visualization (1XU7 dimer with BVT ligand) to {path_enzyme}...")
     asyncio.run(render_enzyme("1XU7", path_enzyme))
+
+    print(f"Rendering active site close-up to {path_active}...")
+    asyncio.run(render_active_site("1XU7", path_active))
 
     print(f"Rendering refined enzyme animation to {path_anim}...")
     asyncio.run(render_enzyme_animation("1XU7", path_anim))

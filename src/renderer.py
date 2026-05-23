@@ -57,7 +57,7 @@ async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20):
     html_content = f"""
     <html>
     <head>
-        <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.2/3Dmol-min.js"></script>
     </head>
     <body>
         <div id="container" style="width: 400px; height: 400px; position: relative;"></div>
@@ -86,9 +86,11 @@ async def render_3d_spacefilling(smiles, output_path, x_rot=20, y_rot=20):
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page()
-        await page.goto(f"file://{os.path.abspath(temp_html)}")
+        await page.goto(f"file://{os.path.abspath(temp_html)}", timeout=60000)
         # Wait for the viewer to signal render completion
-        await page.wait_for_function("window.renderComplete === true")
+        await page.wait_for_function("window.renderComplete === true", timeout=60000)
+        # Delay for rendering to finish internally
+        await asyncio.sleep(2)
         await page.locator("#container").screenshot(path=output_path)
         await browser.close()
 
@@ -115,7 +117,7 @@ async def render_3d_animation(smiles, output_path, num_frames=20):
     html_content = f"""
     <html>
     <head>
-        <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/3Dmol/2.4.2/3Dmol-min.js"></script>
     </head>
     <body>
         <div id="container" style="width: 400px; height: 400px; position: relative;"></div>
@@ -149,13 +151,17 @@ async def render_3d_animation(smiles, output_path, num_frames=20):
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page()
-        await page.goto(f"file://{os.path.abspath(temp_html)}")
-        await page.wait_for_function("window.renderComplete === true")
+        await page.goto(f"file://{os.path.abspath(temp_html)}", timeout=60000)
+        await page.wait_for_function("window.renderComplete === true", timeout=60000)
+        # Delay for initial rendering
+        await asyncio.sleep(2)
 
         angle_step = 360 / num_frames
         for i in range(num_frames):
             frame_path = f"temp_frame_{i}.png"
             await page.evaluate(f"window.rotateAndRender({angle_step})")
+            # Brief delay after rotation for rendering
+            await asyncio.sleep(0.5)
             await page.locator("#container").screenshot(path=frame_path)
             frames.append(Image.open(frame_path))
 
