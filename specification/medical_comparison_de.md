@@ -24,7 +24,7 @@ Das aktive Zentrum besteht aus mehreren Schlüsselkomponenten:
 - **Cofaktor (NADPH)**: Bindet in einer spezifischen Orientierung, um die notwendigen Reduktionsäquivalente bereitzustellen.
 - **Substratbindetasche**: Speziell geformt, um den Steroidkern von Cortisol und Cortison aufzunehmen, wobei sichergestellt wird, dass die C11-Position perfekt auf die katalytischen Reste ausgerichtet ist.
 
-![Nahaufnahme des aktiven Zentrums von 11β-HSD1 (PDB 1XU7)](output/images/enzyme_11bhsd1_active_site.png)
+![Nahaufnahme des aktiven Zentrums von 11β-HSD1 (PDB 3OQ1)](output/images/enzyme_11bhsd1_active_site.png)
 
 ![11β-HSD1 Enzym (PDB 1XU7) mit hervorgehobenem aktivem Zentrum (NDP und katalytische Reste)](output/images/enzyme_11bhsd1.png)
 
