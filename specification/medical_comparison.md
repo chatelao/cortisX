@@ -12,6 +12,20 @@ The conversion of Cortisone to Cortisol is mediated by the enzyme **11β-hydroxy
 
 ![Chemical Balance: Cortisone <=> Cortisol](output/images/chemical_balance.png)
 
+### The 11β-HSD1 Enzyme Mechanism
+
+The conversion of cortisone to cortisol is a critical step in the activation of glucocorticoids. This reaction is catalyzed by **11β-hydroxysteroid dehydrogenase type 1 (11β-HSD1)**.
+
+#### Enzyme Structure and Active Site
+11β-HSD1 is a membrane-bound enzyme belonging to the short-chain dehydrogenase/reductase (SDR) family. It functions primarily as a reductase in vivo, utilizing **NADPH** as a cofactor.
+
+The active site consists of several key components:
+- **Catalytic Triad**: The residues **Ser170**, **Tyr183**, and **Lys187** are essential for the hydride transfer from NADPH to the steroid substrate.
+- **Cofactor (NADPH)**: Binds in a specific orientation to provide the necessary reducing equivalents.
+- **Substrate Binding Pocket**: Specifically shaped to accommodate the steroid nucleus of cortisol and cortisone, ensuring the C11 position is perfectly aligned with the catalytic residues.
+
+![11β-HSD1 Active Site Close-up (PDB 1XU7)](output/images/enzyme_11bhsd1_active_site.png)
+
 ![11β-HSD1 Enzyme (PDB 1XU7) with highlighted Active Center (NDP and Catalytic Residues)](output/images/enzyme_11bhsd1.png)
 
 ## Pharmacological Significance and Clinical Relevance

@@ -12,6 +12,20 @@ Die Umwandlung von Cortison in Cortisol wird durch das Enzym **11β-Hydroxystero
 
 ![Chemisches Gleichgewicht: Cortison <=> Cortisol](output/images/chemical_balance.png)
 
+### Der Mechanismus des 11β-HSD1-Enzyms
+
+Die Umwandlung von Cortison in Cortisol ist ein entscheidender Schritt bei der Aktivierung von Glucocorticoiden. Diese Reaktion wird durch die **11β-Hydroxysteroid-Dehydrogenase Typ 1 (11β-HSD1)** katalysiert.
+
+#### Enzymstruktur und aktives Zentrum
+11β-HSD1 ist ein membrangebundenes Enzym, das zur Familie der Short-Chain-Dehydrogenasen/-Reduktasen (SDR) gehört. Es fungiert in vivo primär als Reduktase und nutzt **NADPH** als Cofaktor.
+
+Das aktive Zentrum besteht aus mehreren Schlüsselkomponenten:
+- **Katalytische Triade**: Die Reste **Ser170**, **Tyr183** und **Lys187** sind essentiell für den Hydridtransfer vom NADPH auf das Steroidsubstrat.
+- **Cofaktor (NADPH)**: Bindet in einer spezifischen Orientierung, um die notwendigen Reduktionsäquivalente bereitzustellen.
+- **Substratbindetasche**: Speziell geformt, um den Steroidkern von Cortisol und Cortison aufzunehmen, wobei sichergestellt wird, dass die C11-Position perfekt auf die katalytischen Reste ausgerichtet ist.
+
+![Nahaufnahme des aktiven Zentrums von 11β-HSD1 (PDB 1XU7)](output/images/enzyme_11bhsd1_active_site.png)
+
 ![11β-HSD1 Enzym (PDB 1XU7) mit hervorgehobenem aktivem Zentrum (NDP und katalytische Reste)](output/images/enzyme_11bhsd1.png)
 
 ## Pharmakologische Bedeutung und klinische Relevanz
