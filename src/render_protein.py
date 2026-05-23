@@ -115,9 +115,9 @@ async def render_enzyme(pdb_id, output_path):
 
 async def render_active_site(pdb_id, output_path):
     """Generates a close-up 3D PNG image of the 11b-HSD1 active site."""
-    # Use 3OQ1 for active site because it has a better steroid-like inhibitor
-    # 1XU7 does not have BVT (it has CPS/CHAPS)
-    actual_pdb = "3OQ1"
+    # Use 1XU7 as requested, highlight NDP, CPS and catalytic residues
+    # CPS (CHAPS) acts as a steroid-like proxy in 1XU7
+    actual_pdb = "1XU7"
 
     # Using only Chain A for the close-up to avoid clutter
     pdb_content = download_and_filter_pdb(actual_pdb, excluded_chains=['B', 'C', 'D'])
@@ -144,17 +144,17 @@ async def render_active_site(pdb_id, output_path):
             // Style the protein as semi-transparent cartoon
             viewer.setStyle({{}}, {{ cartoon: {{ color: 'lightgray', opacity: 0.3 }} }});
 
-            // Highlight the cofactor (NDP or NAP)
-            viewer.addStyle({{ resn: ['NDP', 'NAP'] }},
+            // Highlight the cofactor (NDP)
+            viewer.addStyle({{ resn: 'NDP' }},
                            {{ stick: {{ colorscheme: 'greenCarbon', radius: 0.2 }},
                              sphere: {{ colorscheme: 'greenCarbon', radius: 0.4, opacity: 0.6 }} }});
-            viewer.addLabel("NADPH (Cofactor)", {{ font: 'sans-serif', fontSize: 18, fontColor: 'darkgreen', backgroundColor: 'white', backgroundOpacity: 0.7 }}, {{ resn: ['NDP', 'NAP'] }});
+            viewer.addLabel("NADPH (Cofactor)", {{ font: 'sans-serif', fontSize: 18, fontColor: 'darkgreen', backgroundColor: 'white', backgroundOpacity: 0.7 }}, {{ resn: 'NDP' }});
 
-            // Highlight the steroid-like ligand (3OQ)
-            viewer.addStyle({{ resn: '3OQ' }},
+            // Highlight the steroid-like ligand (CPS/CHAPS)
+            viewer.addStyle({{ resn: 'CPS' }},
                            {{ stick: {{ colorscheme: 'magentaCarbon', radius: 0.25 }},
                              sphere: {{ colorscheme: 'magentaCarbon', radius: 0.5 }} }});
-            viewer.addLabel("Steroid-like Inhibitor", {{ font: 'sans-serif', fontSize: 20, fontColor: 'darkmagenta', backgroundColor: 'white', backgroundOpacity: 0.8 }}, {{ resn: '3OQ' }});
+            viewer.addLabel("Steroid Site (CPS)", {{ font: 'sans-serif', fontSize: 20, fontColor: 'darkmagenta', backgroundColor: 'white', backgroundOpacity: 0.8 }}, {{ resn: 'CPS' }});
 
             // Highlight catalytic triad (Ser170, Tyr183, Lys187)
             viewer.addStyle({{ resi: [170, 183, 187] }},
@@ -165,7 +165,7 @@ async def render_active_site(pdb_id, output_path):
             viewer.addLabel("Lys187", {{ fontSize: 14, fontColor: '#E74C3C' }}, {{ resi: 187, atom: 'NZ' }});
 
             // Zoom into the ligand
-            viewer.zoomTo({{ resn: '3OQ' }});
+            viewer.zoomTo({{ resn: 'CPS' }});
             viewer.render();
             window.renderComplete = true;
         </script>
@@ -181,7 +181,7 @@ async def render_active_site(pdb_id, output_path):
         browser = await p.chromium.launch()
         page = await browser.new_page()
         await page.set_viewport_size({"width": 1200, "height": 900})
-        await page.goto(f"file://{os.path.abspath(temp_html)}")
+        await page.goto(f"file://{os.path.abspath(temp_html)}", timeout=60000)
 
         await page.wait_for_function("window.renderComplete === true", timeout=60000)
         # Ensure a small delay for rendering to finish internally
@@ -242,13 +242,17 @@ async def render_enzyme_animation(pdb_id, output_path, num_frames=24):
         browser = await p.chromium.launch()
         page = await browser.new_page()
         await page.set_viewport_size({"width": 800, "height": 600})
-        await page.goto(f"file://{os.path.abspath(temp_html)}")
-        await page.wait_for_function("window.renderComplete === true")
+        await page.goto(f"file://{os.path.abspath(temp_html)}", timeout=60000)
+        await page.wait_for_function("window.renderComplete === true", timeout=60000)
+        # Delay for initial rendering
+        await asyncio.sleep(2)
 
         angle_step = 360 / num_frames
         for i in range(num_frames):
             frame_path = f"temp_protein_frame_{i}.png"
             await page.evaluate(f"window.rotateAndRender({angle_step})")
+            # Brief delay after rotation for rendering
+            await asyncio.sleep(0.5)
             await page.locator("#container").screenshot(path=frame_path)
             frames.append(Image.open(frame_path))
 

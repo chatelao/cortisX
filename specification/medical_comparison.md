@@ -24,7 +24,7 @@ The active site consists of several key components:
 - **Cofactor (NADPH)**: Binds in a specific orientation to provide the necessary reducing equivalents.
 - **Substrate Binding Pocket**: Specifically shaped to accommodate the steroid nucleus of cortisol and cortisone, ensuring the C11 position is perfectly aligned with the catalytic residues.
 
-![11β-HSD1 Active Site Close-up (PDB 3OQ1)](output/images/enzyme_11bhsd1_active_site.png)
+![11β-HSD1 Active Site Close-up (PDB 1XU7)](output/images/enzyme_11bhsd1_active_site.png)
 
 ![11β-HSD1 Enzyme (PDB 1XU7) with highlighted Active Center (NDP and Catalytic Residues)](output/images/enzyme_11bhsd1.png)
 
