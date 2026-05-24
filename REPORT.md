@@ -91,6 +91,11 @@ The signaling pathway of Cortisol (and activated Cortisone) involves several dis
 - **Joint and Tendon Inflammation**: Historically known as "cortisone shots," though today synthetic derivatives like triamcinolone or direct-acting hydrocortisone are mostly used, as cortisone would first need to be activated locally.
 - **Systemic Inflammation**: Used orally for various autoimmune and inflammatory conditions where a prodrug approach is acceptable.
 
+### Infiltration Therapy (Spine)
+- **Application for Disc Problems**: In cases of herniated discs or spinal stenosis, infiltration therapy (e.g., periradicular therapy - PRT or epidural injection) is utilized.
+- **Goal**: Direct application of glucocorticoids (often in combination with local anesthetics) near the affected nerve root or into the epidural space for local anti-inflammatory effects and reduction of swelling in the irritated tissue.
+- **Active Ingredients**: Typically, crystalline, long-acting synthetic derivatives (such as triamcinolone or betamethasone) are used to achieve a long-lasting local effect and minimize systemic side effects.
+
 ## Key Differences
 | Feature | Cortisol (Hydrocortisone) | Cortisone |
 |---------|---------------------------|-----------|

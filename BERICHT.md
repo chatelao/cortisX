@@ -91,6 +91,11 @@ Der Signalweg von Cortisol (und aktiviertem Cortison) umfasst mehrere unterschie
 - **Gelenk- und Sehnenentzündungen**: Historisch als „Cortisonspritze“ bekannt, wobei heute meist synthetische Derivate wie Triamcinolon oder direkt wirksames Hydrocortison verwendet werden, da Cortison vor Ort erst aktiviert werden müsste.
 - **Systemische Entzündungen**: Wird oral bei verschiedenen Autoimmun- und Entzündungskrankheiten eingesetzt, bei denen ein Prodrug-Ansatz akzeptabel ist.
 
+### Infiltrationstherapie (Wirbelsäule)
+- **Anwendung bei Bandscheibenproblemen**: Bei Bandscheibenvorfällen oder Stenosen wird die Infiltrationstherapie (z. B. periradikuläre Therapie - PRT oder epidurale Injektion) eingesetzt.
+- **Ziel**: Direkte Applikation von Glucocorticoiden (oft in Kombination mit Lokalanästhetika) in die Nähe der betroffenen Nervenwurzel oder in den Epiduralraum zur lokalen Entzündungshemmung und Abschwellung des gereizten Gewebes.
+- **Wirkstoffe**: Meist werden kristalline, langwirksame synthetische Derivate (wie Triamcinolon oder Betamethason) verwendet, um eine langanhaltende lokale Wirkung zu erzielen und systemische Nebenwirkungen zu minimieren.
+
 ## Hauptunterschiede
 | Merkmal | Cortisol (Hydrocortison) | Cortison |
 |---------|---------------------------|-----------|
